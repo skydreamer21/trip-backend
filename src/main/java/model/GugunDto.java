@@ -1,31 +1,31 @@
 package model;
 
 public class GugunDto {
-	private int gugunCode;
-	private String gugunName;
+	private int code;
+	private String name;
 	private int sidoCode;
 	
 	public GugunDto(int gugunCode, String gugunName, int sidoCode) {
 		super();
-		this.gugunCode = gugunCode;
-		this.gugunName = gugunName;
+		this.code = gugunCode;
+		this.name = gugunName;
 		this.sidoCode = sidoCode;
 	}
 
 	public int getGugunCode() {
-		return gugunCode;
+		return code;
 	}
 
 	public void setGugunCode(int gugunCode) {
-		this.gugunCode = gugunCode;
+		this.code = gugunCode;
 	}
 
 	public String getGugunName() {
-		return gugunName;
+		return name;
 	}
 
 	public void setGugunName(String gugunName) {
-		this.gugunName = gugunName;
+		this.name = gugunName;
 	}
 
 	public int getSidoCode() {

@@ -1,28 +1,28 @@
 package model;
 
 public class SidoDto {
-	private int sidoCode;
-	private String sidoName;
+	private int code;
+	private String name;
 	
 	public SidoDto(int sidoCode, String sidoName) {
 		super();
-		this.sidoCode = sidoCode;
-		this.sidoName = sidoName;
+		this.code = sidoCode;
+		this.name = sidoName;
 	}
 
 	public int getSidoCode() {
-		return sidoCode;
+		return code;
 	}
 
 	public void setSidoCode(int sidoCode) {
-		this.sidoCode = sidoCode;
+		this.code = sidoCode;
 	}
 
 	public String getSidoName() {
-		return sidoName;
+		return name;
 	}
 
 	public void setSidoName(String sidoName) {
-		this.sidoName = sidoName;
+		this.name = sidoName;
 	}
 }
