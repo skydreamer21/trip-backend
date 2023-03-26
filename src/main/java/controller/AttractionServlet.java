@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import model.AttractionDto;
 import model.GugunDto;
 import model.SidoDto;
 import service.AttractionServiceImpl;
@@ -51,6 +52,16 @@ public class AttractionServlet extends HttpServlet {
 			List<GugunDto> gugunDtos = attractionService.findGugunBySido(sidoCode);
 			PrintWriter out = response.getWriter();
 			out.write(gson.toJson(gugunDtos));
+			out.flush();
+		} else if(action.equalsIgnoreCase("search")) {
+			int sidoCode = Integer.parseInt(request.getParameter("sidoCode"));
+			int gugunCode = Integer.parseInt(request.getParameter("gugunCode"));
+			int contentTypeId = Integer.parseInt(request.getParameter("contentTypeId"));
+			String keyword = request.getParameter("keyword");
+			
+			List<AttractionDto> attractionDtos = attractionService.findAttractions(sidoCode, gugunCode, contentTypeId, keyword);
+			PrintWriter out = response.getWriter();
+			out.write(gson.toJson(attractionDtos));
 			out.flush();
 		}
 		
