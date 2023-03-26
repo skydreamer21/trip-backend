@@ -91,6 +91,7 @@ public class MemberDaoImpl implements IMemberDao {
 			psmt.setString(i++, dto.getUser_password());
 			psmt.setString(i++, dto.getEmail_id());
 			psmt.setString(i++, dto.getEmail_domain());
+			psmt.setString(i++, dto.getUser_id());
 
 			count = psmt.executeUpdate();
 		} catch (SQLException e) {
