@@ -95,17 +95,17 @@ public class MemberServlet extends HttpServlet {
 
 		}
 
-//		else if (action.equalsIgnoreCase("detail")) {
-//			
+		else if (action.equalsIgnoreCase("detail")) {
+			
 //			MemberDto getCurSessionInfo = (MemberDto)session.getAttribute("login");
 //			String user_id = getCurSessionInfo.getUser_id();
-//
-//			
-//			path = root + "/member/detail.jsp";
-//			response.sendRedirect(path);
-//			
-//			return;
-//		}
+
+			
+			path = root + "/member/detail.jsp";
+			response.sendRedirect(path);
+			
+			return;
+		}
 
 		// 회원정보 조회-> 수정하기 버튼 누를 때 -> 수정 페이지로 이동
 		else if (action.equalsIgnoreCase("update")) {
