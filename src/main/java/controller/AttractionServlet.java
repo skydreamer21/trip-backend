@@ -2,9 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import model.GugunDto;
 import model.SidoDto;
 import service.AttractionServiceImpl;
 
@@ -46,6 +45,12 @@ public class AttractionServlet extends HttpServlet {
 			List<SidoDto> sidoDto = attractionService.readSido();
 			PrintWriter out = response.getWriter();
 			out.write(gson.toJson(sidoDto));
+			out.flush();
+		} else if(action.equalsIgnoreCase("gugun")) {
+			int sidoCode = Integer.parseInt(request.getParameter("sidoCode"));
+			List<GugunDto> gugunDtos = attractionService.findGugunBySido(sidoCode);
+			PrintWriter out = response.getWriter();
+			out.write(gson.toJson(gugunDtos));
 			out.flush();
 		}
 		
