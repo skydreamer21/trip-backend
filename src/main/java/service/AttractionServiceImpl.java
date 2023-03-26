@@ -2,6 +2,8 @@ package service;
 
 import java.util.List;
 
+import model.AttractionDaoImpl;
+import model.AttractionDto;
 import model.GugunDaoImpl;
 import model.GugunDto;
 import model.SidoDaoImpl;
@@ -11,10 +13,12 @@ public class AttractionServiceImpl implements iAttractionService {
 	private static AttractionServiceImpl instance = new AttractionServiceImpl();
 	private  SidoDaoImpl sidoDao;
 	private GugunDaoImpl gugunDao;
+	private AttractionDaoImpl attractionDao;
 
 	private AttractionServiceImpl() {
 		sidoDao = new SidoDaoImpl();
 		gugunDao = new GugunDaoImpl();
+		attractionDao = new AttractionDaoImpl();
 	}
 	
 	public static AttractionServiceImpl getInstance() {
@@ -30,6 +34,10 @@ public class AttractionServiceImpl implements iAttractionService {
 	public List<GugunDto> findGugunBySido(int sidoCode) {
 		return gugunDao.selectGugunBySido(sidoCode);
 	}
-	
+
+	@Override
+	public List<AttractionDto> findAttractions(int sidoCode, int gugunCode, int contentTypeId, String keyword) {
+		return attractionDao.selectAttractions(sidoCode, gugunCode, contentTypeId, keyword);
+	}
 	
 }
