@@ -1,11 +1,14 @@
 ### Custom ###
 simpleTest/
 build/
+target/
 
 ### Eclipse ###
 .metadata
 bin/
 tmp/
+.classpath
+.project
 *.tmp
 *.bak
 *.swp
