@@ -2,15 +2,18 @@ package service;
 
 import java.util.List;
 
+import model.GugunDaoImpl;
+import model.GugunDto;
 import model.SidoDaoImpl;
 import model.SidoDto;
 
 public class AttractionServiceImpl implements iAttractionService {
 	private static AttractionServiceImpl instance = new AttractionServiceImpl();
-	private  SidoDaoImpl dao;
+	private  SidoDaoImpl sidoDao;
+	private GugunDaoImpl gugunDao;
 
 	private AttractionServiceImpl() {
-		dao = new SidoDaoImpl();
+		sidoDao = new SidoDaoImpl();
 	}
 	
 	public static AttractionServiceImpl getInstance() {
@@ -19,6 +22,13 @@ public class AttractionServiceImpl implements iAttractionService {
 
 	@Override
 	public List<SidoDto> readSido() {
-		return dao.selectSido();
+		return sidoDao.selectSido();
 	}
+
+	@Override
+	public List<GugunDto> findGugunBySido(int sidoCode) {
+		return gugunDao.selectGugunBySido(sidoCode);
+	}
+	
+	
 }
