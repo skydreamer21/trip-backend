@@ -14,6 +14,7 @@ public class AttractionServiceImpl implements iAttractionService {
 
 	private AttractionServiceImpl() {
 		sidoDao = new SidoDaoImpl();
+		gugunDao = new GugunDaoImpl();
 	}
 	
 	public static AttractionServiceImpl getInstance() {
