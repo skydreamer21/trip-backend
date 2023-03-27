@@ -1,20 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
-	crossorigin="anonymous">
+<meta charset="UTF-8">
 <link rel="stylesheet" href="../assets/css/attraction.css">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-	crossorigin="anonymous"></script>
 <title>Attraction Info</title>
+<%@ include file="/common/head.jsp" %>
 </head>
 <body>
 	<!--====== SEARCH PART START ======-->
@@ -28,7 +20,7 @@
 								<label for="category"><i
 									class="lni lni-grid-alt theme-color"></i></label> <select
 									name="category" id="category">
-									<option value="none" selected disabled>Áö¿ª</option>
+									<option value="none" selected disabled>ì§€ì—­</option>
 								</select>
 							</div>
 						</div>
@@ -37,7 +29,7 @@
 								<label for="location"><i
 									class="lni lni-map-marker theme-color"></i></label> <select
 									name="location" id="location">
-									<option value="0" selected disabled>½Ã/±º/±¸</option>
+									<option value="0" selected disabled>ì‹œ/êµ°/êµ¬</option>
 								</select>
 							</div>
 						</div>
@@ -46,15 +38,15 @@
 								<label for="contents"><i
 									class="lni lni-map-marker theme-color"></i></label> <select
 									name="contents" id="contents">
-									<option value="0" selected disabled>°ü±¤Áö À¯Çü</option>
-									<option value="12">°ü±¤Áö</option>
-									<option value="14">¹®È­½Ã¼³</option>
-									<option value="15">ÃàÁ¦°ø¿¬Çà»ç</option>
-									<option value="25">¿©ÇàÄÚ½º</option>
-									<option value="28">·¹Æ÷Ã÷</option>
-									<option value="32">¼÷¹Ú</option>
-									<option value="38">¼îÇÎ</option>
-									<option value="39">À½½ÄÁ¡</option>
+									<option value="0" selected disabled>ê´€ê´‘ì§€ ìœ í˜•</option>
+									<option value="12">ê´€ê´‘ì§€</option>
+									<option value="14">ë¬¸í™”ì‹œì„¤</option>
+									<option value="15">ì¶•ì œê³µì—°í–‰ì‚¬</option>
+									<option value="25">ì—¬í–‰ì½”ìŠ¤</option>
+									<option value="28">ë ˆí¬ì¸ </option>
+									<option value="32">ìˆ™ë°•</option>
+									<option value="38">ì‡¼í•‘</option>
+									<option value="39">ìŒì‹ì </option>
 								</select>
 							</div>
 						</div>
@@ -62,7 +54,7 @@
 							<div class="search-input">
 								<label for="keyword"><i
 									class="lni lni-search-alt theme-color"></i></label> <input type="text"
-									name="keyword" id="keyword" placeholder="Å°¿öµå¸¦ ÀÔ·ÂÇÏ¼¼¿ä." />
+									name="keyword" id="keyword" placeholder="í‚¤ì›Œë“œë¥¼ ì…ë ¥í•˜ì„¸ìš”." />
 							</div>
 						</div>
 						<div class="col-lg-2 col-sm-5 col-10">
@@ -90,19 +82,20 @@
 		<table class="table table-striped" style="display: none">
 			<thead>
 				<tr>
-					<th>´ëÇ¥ÀÌ¹ÌÁö</th>
-					<th>°ü±¤Áö¸í</th>
-					<th>°ü±¤Áö ºĞ·ù</th>
-					<th>ÁÖ¼Ò</th>
-					<th>ÀüÈ­¹øÈ£</th>
-					<th>Á¶È¸¼ö</th>
+					<th>ëŒ€í‘œì´ë¯¸ì§€</th>
+					<th>ê´€ê´‘ì§€ëª…</th>
+					<th>ê´€ê´‘ì§€ ë¶„ë¥˜</th>
+					<th>ì£¼ì†Œ</th>
+					<th>ì „í™”ë²ˆí˜¸</th>
+					<th>ì¡°íšŒìˆ˜</th>
 				</tr>
 			</thead>
 			<tbody id="trip-list"></tbody>
 		</table>
 	</div>
 	<!--====== TABLE END ======-->
-
+	
+	<a href="${root}/index.jsp">Homeìœ¼ë¡œ ëŒì•„ê°€ê¸°</a>
 
 
 	<!--====== JAVASCRIPT IMPORT START ======-->
@@ -110,7 +103,7 @@
 	<script type="text/javascript">
 	
 		// ================ Sido, Gugun Option START ================
-		// index page ·Îµù ÈÄ Àü±¹ÀÇ ½Ãµµ ¼³Á¤.
+		// index page ë¡œë”© í›„ ì „êµ­ì˜ ì‹œë„ ì„¤ì •.
 		let areaUrl = "../attraction?action=sido"
 		
 		fetch(areaUrl, { method: "GET" })
@@ -121,7 +114,7 @@
 		const areaSelect = document.querySelector("#category")
 // 		console.log(areaSelect);
 
-		// ¼ÒÁö¿ª ¼³Á¤
+		// ì†Œì§€ì—­ ì„¤ì •
 		areaSelect.addEventListener("change", setSmallArea)
 
 		function setSmallArea() {
@@ -168,7 +161,7 @@
 		searchBtn.addEventListener("click", (event) => {
 		    let sidoCode = document.getElementById("category").value;
 		    if (sidoCode === "none") {
-		    	alert("Áö¿ªÀ» ¼±ÅÃÇØÁÖ¼¼¿ä!");
+		    	alert("ì§€ì—­ì„ ì„ íƒí•´ì£¼ì„¸ìš”!");
 		    	return;
 		    }
 		    
@@ -190,12 +183,12 @@
 		        .then((data) => makeList(data));
 		});
 		
-		const mapContainer = document.getElementById('map'), // Áöµµ¸¦ Ç¥½ÃÇÒ div 
+		const mapContainer = document.getElementById('map'), // ì§€ë„ë¥¼ í‘œì‹œí•  div 
 	    mapOption = { 
-	        center: new kakao.maps.LatLng(33.450701, 126.570667), // ÁöµµÀÇ Áß½ÉÁÂÇ¥
-	        level: 3 // ÁöµµÀÇ È®´ë ·¹º§
+	        center: new kakao.maps.LatLng(33.450701, 126.570667), // ì§€ë„ì˜ ì¤‘ì‹¬ì¢Œí‘œ
+	        level: 3 // ì§€ë„ì˜ í™•ëŒ€ ë ˆë²¨
 	    };
-		// Áöµµ¸¦ Ç¥½ÃÇÒ div¿Í  Áöµµ ¿É¼ÇÀ¸·Î  Áöµµ¸¦ »ı¼ºÇÕ´Ï´Ù
+		// ì§€ë„ë¥¼ í‘œì‹œí•  divì™€  ì§€ë„ ì˜µì…˜ìœ¼ë¡œ  ì§€ë„ë¥¼ ìƒì„±í•©ë‹ˆë‹¤
 		const map = new kakao.maps.Map(mapContainer, mapOption);
 
 
@@ -227,26 +220,26 @@
 		}
 		
 		function displayMarker() {
-		    // ¸¶Ä¿ ÀÌ¹ÌÁöÀÇ ÀÌ¹ÌÁö ÁÖ¼ÒÀÔ´Ï´Ù
+		    // ë§ˆì»¤ ì´ë¯¸ì§€ì˜ ì´ë¯¸ì§€ ì£¼ì†Œì…ë‹ˆë‹¤
 		    let imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 
 		    for (var i = 0; i < positions.length; i++) {
-		        // ¸¶Ä¿ ÀÌ¹ÌÁöÀÇ ÀÌ¹ÌÁö Å©±â ÀÔ´Ï´Ù
+		        // ë§ˆì»¤ ì´ë¯¸ì§€ì˜ ì´ë¯¸ì§€ í¬ê¸° ì…ë‹ˆë‹¤
 		        var imageSize = new kakao.maps.Size(24, 35);
 
-		        // ¸¶Ä¿ ÀÌ¹ÌÁö¸¦ »ı¼ºÇÕ´Ï´Ù
+		        // ë§ˆì»¤ ì´ë¯¸ì§€ë¥¼ ìƒì„±í•©ë‹ˆë‹¤
 		        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
-		        // ¸¶Ä¿¸¦ »ı¼ºÇÕ´Ï´Ù
+		        // ë§ˆì»¤ë¥¼ ìƒì„±í•©ë‹ˆë‹¤
 		        var marker = new kakao.maps.Marker({
-		        map: map, // ¸¶Ä¿¸¦ Ç¥½ÃÇÒ Áöµµ
-		        position: positions[i].latlng, // ¸¶Ä¿¸¦ Ç¥½ÃÇÒ À§Ä¡
-		        title: positions[i].title, // ¸¶Ä¿ÀÇ Å¸ÀÌÆ², ¸¶Ä¿¿¡ ¸¶¿ì½º¸¦ ¿Ã¸®¸é Å¸ÀÌÆ²ÀÌ Ç¥½ÃµË´Ï´Ù
-		        image: markerImage, // ¸¶Ä¿ ÀÌ¹ÌÁö
+		        map: map, // ë§ˆì»¤ë¥¼ í‘œì‹œí•  ì§€ë„
+		        position: positions[i].latlng, // ë§ˆì»¤ë¥¼ í‘œì‹œí•  ìœ„ì¹˜
+		        title: positions[i].title, // ë§ˆì»¤ì˜ íƒ€ì´í‹€, ë§ˆì»¤ì— ë§ˆìš°ìŠ¤ë¥¼ ì˜¬ë¦¬ë©´ íƒ€ì´í‹€ì´ í‘œì‹œë©ë‹ˆë‹¤
+		        image: markerImage, // ë§ˆì»¤ ì´ë¯¸ì§€
 		        });
 		    }
 
-		    // Ã¹¹øÂ° °Ë»ö Á¤º¸¸¦ ÀÌ¿ëÇÏ¿© Áöµµ Áß½ÉÀ» ÀÌµ¿ ½ÃÅµ´Ï´Ù
+		    // ì²«ë²ˆì§¸ ê²€ìƒ‰ ì •ë³´ë¥¼ ì´ìš©í•˜ì—¬ ì§€ë„ ì¤‘ì‹¬ì„ ì´ë™ ì‹œí‚µë‹ˆë‹¤
 		    map.setCenter(positions[0].latlng);
 		}
 
