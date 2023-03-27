@@ -6,6 +6,7 @@ public class MemberDto {
 	private String user_password;
 	private String email_id;
 	private String email_domain;
+	private boolean available;
 	
 	public MemberDto() {
 		super();
@@ -17,13 +18,14 @@ public class MemberDto {
 
 	// 회원가입 | 회원정보 조회 | 회원정보 수정 
 	//Constructor : 아이디, 이름, 비번, 이메일 id, 이메일 domain
-	public MemberDto(String user_id, String user_name, String user_password, String email_id, String email_domain) {
+	public MemberDto(String user_id, String user_name, String user_password, String email_id, String email_domain, boolean available) {
 		super();
 		this.user_id = user_id;
 		this.user_name = user_name;
 		this.user_password = user_password;
 		this.email_id = email_id;
 		this.email_domain = email_domain;
+		this.available = true;
 	}
 	
 	
@@ -33,6 +35,24 @@ public class MemberDto {
 		super();
 		this.user_id = user_id;
 		this.user_password = user_password;
+	}
+
+	
+	public MemberDto(String user_id, String user_name, String user_password, String email_id, String email_domain) {
+		super();
+		this.user_id = user_id;
+		this.user_name = user_name;
+		this.user_password = user_password;
+		this.email_id = email_id;
+		this.email_domain = email_domain;
+	}
+
+	public boolean isAvailable() {
+		return available;
+	}
+
+	public void setAvailable(boolean available) {
+		this.available = available;
 	}
 
 	public void setUser_id(String user_id) {

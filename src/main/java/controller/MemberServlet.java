@@ -83,23 +83,26 @@ public class MemberServlet extends HttpServlet {
 			String user_password = request.getParameter("user_password");
 			MemberDto login = mservice.login(new MemberDto(user_id, user_password));
 			HttpSession session = request.getSession(); // 세션 저장
-			if (login != null) { // 5
-				session.setAttribute("login", login);
-				out.write("<script>" + " alert('로그인에 성공하였습니다.');" + " location.href='index.jsp';" + "</script>");
-				out.close();
-			} else {
+			if (login != null) { // 
+				if (login.isAvailable()) {// 이용 가능한 유저라면
+					session.setAttribute("login", login);
+					out.write("<script>" + " alert('로그인에 성공하였습니다.');" + " location.href='index.jsp';" + "</script>");
+					out.close();
+				}
+				else { // 탈퇴한 사용자라면 
+					session.invalidate();
+					out.write("<script>" + " alert('탈퇴한 계정입니다.');" + " location.href='index.jsp';" + "</script>");
+					out.close();
+				}
+			} else { // 계정이 없다면
 				session.invalidate();
-				out.write("<script>" + " alert('로그인에 실패하였습니다.');" + " location.href='index.jsp';" + "</script>");
+				out.write("<script>" + " alert('입력한 정보가 올바르지 않습니다. 다시 확인해주세요');" + " location.href='index.jsp';" + "</script>");
 				out.close();
 			}
 
 		}
 
 		else if (action.equalsIgnoreCase("detail")) {
-			
-//			MemberDto getCurSessionInfo = (MemberDto)session.getAttribute("login");
-//			String user_id = getCurSessionInfo.getUser_id();
-
 			
 			path = root + "/member/detail.jsp";
 			response.sendRedirect(path);

@@ -29,9 +29,16 @@ public class MemberServiceImpl implements IMemberService {
 
 	@Override
 	public MemberDto login(MemberDto dto) {
-		return mdao.selectUserInfo(dto);
+		
+		MemberDto loginUser = mdao.selectUserInfo(dto);
+		if(loginUser != null) {
+			return loginUser;
+		}
+		
+		return null;
+
 	}
-	
+		
 	@Override
 	public boolean userCheck(MemberDto dto) {
 		

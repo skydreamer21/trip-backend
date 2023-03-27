@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,9 +13,7 @@
   
 </head>
 <body>
-<%
-String root=request.getContextPath();
-%>
+<c:set value="${pageContext.request.contextPath}" var="root"></c:set>
 
 <%@ page import="model.MemberDto" %>
 <%
@@ -31,11 +30,11 @@ String email_domain = getCurSessionInfo.getEmail_domain();
     <input type="hidden"  id="action" name="action" value="updateaf">
     <div class="mb-3 mt-3">
       <label for="user_id">사용자 아이디</label>
-      <input type="text" class="form-control member-detail" id="user_id" placeholder=<%=user_id%> name="user_id" readonly>
+      <input type="text" class="form-control member-detail" id="user_id" value=<%=user_id%> name="user_id" readonly>
     </div>
     <div class="mb-3 mt-3">
       <label for="user_name">사용자 이름</label>
-      <input type="text" class="form-control member-detail" id="user_name" placeholder=<%=user_name%> name="user_name" readonly>
+      <input type="text" class="form-control member-detail" id="user_name" value=<%=user_name%> name="user_name" readonly>
     </div>
     <div class="mb-3">
       <label for="user_password">사용자 패스워드</label>
@@ -45,8 +44,8 @@ String email_domain = getCurSessionInfo.getEmail_domain();
        <label for="email_id">이메일</label>
     </div>
       <div class="input-group mt-1 mb-3">
-       <input type="text" class="form-control" id="email_id" placeholder=<%=email_id%> name="email_id" >@
-    <select class="form-select" id="email_domain" name="email_domain">
+       <input type="text" class="form-control" id="email_id" placeholder=<%=email_id%> value=<%=email_id%> name="email_id" >@
+    <select class="form-select" id="email_domain" name="email_domain" value =<%=email_domain%>>
       <option value="naver.com">naver.com</option>
       <option value="ssafy.com">ssafy.com</option>
       <option value="google.com">google.com</option>
