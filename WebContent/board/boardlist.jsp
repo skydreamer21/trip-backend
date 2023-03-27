@@ -1,36 +1,32 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
-	crossorigin="anonymous">
 </head>
 <body>
+	<%@include file="/common/head.jsp"%>
 	<div id="section">
 		<div id="tboard">
-			<h1>±Û¸ñ·Ï</h1>
+			<h1>ê¸€ëª©ë¡</h1>
 			<table class="table table-striped">
 				<tr>
-					<th>¹øÈ£</th>
-					<th>ÀÛ¼ºÀÚ</th>
-					<th>Á¦¸ñ</th>
-					<th>Á¶È¸¼ö</th>
+					<th>ë²ˆí˜¸</th>
+					<th>ì‘ì„±ì</th>
+					<th>ì œëª©</th>
+					<th>ì¡°íšŒìˆ˜</th>
 				</tr>
-				<c:foreach var="board" items="${boards}" varStatus="vs">
+				<c:forEach var="board" items="${boards}" varStatus="vs">
 					<tr>
-						<td><a href="../board?action=detail&acticleNo=${board.articleNo}">${vs.count}</a></td>
+						<td><a
+							href="../board?action=detail&acticleNo=${board.articleNo}">${vs.count}</a></td>
 						<td>${board.title}</td>
 						<td>${board.userId}</td>
 						<td>${board.hitCount}</td>
 					</tr>
-				</c:foreach>
+				</c:forEach>
 			</table>
 		</div>
 	</div>
