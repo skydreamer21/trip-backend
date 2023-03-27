@@ -8,4 +8,5 @@ public interface iBoardDao {
 	boolean insertBoard(BoardDto dto);
 	boolean updateHitCount(int articleNo);
 	boolean updateBoard(BoardDto dto);
+	boolean deleteBoard(int articleNo);
 }
