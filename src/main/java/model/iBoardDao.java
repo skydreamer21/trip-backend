@@ -7,4 +7,5 @@ public interface iBoardDao {
 	BoardDto selectByArticleNo(int articleNo);
 	boolean insertBoard(BoardDto dto);
 	boolean updateHitCount(int articleNo);
+	boolean updateBoard(BoardDto dto);
 }

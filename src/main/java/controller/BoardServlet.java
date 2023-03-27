@@ -1,4 +1,4 @@
-	package controller;
+package controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -74,7 +74,28 @@ public class BoardServlet extends HttpServlet {
 			request.setAttribute("board", post);
 			RequestDispatcher rd = request.getRequestDispatcher("./board/boardDetail.jsp");
 			rd.forward(request, response);
+		} else if(action.equalsIgnoreCase("updateBoard")) {
+			int articleNo = Integer.parseInt(request.getParameter("articleNo"));
+			BoardDto post = boardService.findPost(articleNo);
+			request.setAttribute("board", post);
+			RequestDispatcher rd = request.getRequestDispatcher("./board/boardwrite.jsp");
+			rd.forward(request, response);
+		} else if(action.equalsIgnoreCase("boardUpdateaf")) {
+			int articleNo = Integer.parseInt(request.getParameter("articleNo"));
+			String userId = request.getParameter("userId");
+			String title = request.getParameter("title");
+			String content = request.getParameter("content");
+			
+			boolean isS = boardService.updateBoard(new BoardDto(articleNo, userId, title, content));
+			if (isS) {
+				response.sendRedirect("./boardController?action=boardlist");
+			} else {
+				request.setAttribute("msg", "글 수정에 실패했습니다.");
+				RequestDispatcher rd = request.getRequestDispatcher("./boardController?action=detail&articleNo="+articleNo);
+				rd.forward(request, response);
+			}
 		}
+		
 		
 	}
 

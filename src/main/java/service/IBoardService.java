@@ -8,4 +8,5 @@ public interface IBoardService {
 	boolean write(BoardDto dto);
 	List<BoardDto> findAllPosts();
 	BoardDto findPost(int articleNo);
+	boolean updateBoard(BoardDto dto);
 }

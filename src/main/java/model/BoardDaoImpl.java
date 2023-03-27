@@ -128,6 +128,32 @@ public class BoardDaoImpl implements iBoardDao {
 		}
 		return count > 0;
 	}
+
+	@Override
+	public boolean updateBoard(BoardDto dto) {
+		StringBuilder sql = new StringBuilder();
+		sql.append(" update board set title=?, content=? ")
+			.append(" where article_no=? ");
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int count = 0;
+		
+		try {
+			conn = dbUtil.getConnection();
+			psmt = conn.prepareStatement(sql.toString());
+			int i=1;
+			psmt.setString(i++, dto.getTitle());
+			psmt.setString(i++, dto.getContent());
+			psmt.setInt(i++, dto.getArticleNo());
+			count = psmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("[ERROR] board update exceptions : " + e);
+		} finally {
+			dbUtil.close(psmt, conn);
+		}
+		return count > 0;
+	}
 	
 	
 	
