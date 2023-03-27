@@ -32,6 +32,7 @@ public class BoardServiceImpl implements IBoardService {
 		// TODO : 유효성 검증
 		
 		// TODO : 조회수 올리기
+		dao.updateHitCount(articleNo);
 		
 		return dao.selectByArticleNo(articleNo);
 	}

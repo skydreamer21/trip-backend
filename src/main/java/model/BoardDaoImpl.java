@@ -105,6 +105,31 @@ public class BoardDaoImpl implements iBoardDao {
 		}
 		return count > 0;
 	}
+
+	@Override
+	public boolean updateHitCount(int articleNo) {
+		StringBuilder sql = new StringBuilder();
+		sql.append(" update board set hit=hit+1 ")
+			.append(" where article_no=? ");
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int count = 0;
+		
+		try {
+			conn = dbUtil.getConnection();
+			psmt = conn.prepareStatement(sql.toString());
+			psmt.setInt(1, articleNo);
+			count = psmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("[ERROR] board hitCount exceptions : " + e);
+		} finally {
+			dbUtil.close(psmt, conn);
+		}
+		return count > 0;
+	}
+	
+	
 	
 	
 }
