@@ -57,6 +57,7 @@
 	<input type="hidden" name="article_no" value="${board.articleNo}"/>
 	<input type="submit" value="삭제" />
 </form>
+<div><a href="${root}/boardController?action=boardlist">글 목록으로 돌아가기</a></div>
 </div>
 </div>
 </body>
