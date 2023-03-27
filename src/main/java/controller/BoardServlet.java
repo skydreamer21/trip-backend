@@ -1,6 +1,7 @@
 	package controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -63,7 +64,10 @@ public class BoardServlet extends HttpServlet {
 				rd.forward(request, response);
 			}
 		} else if(action.equalsIgnoreCase("boardlist")) {
-			
+			List<BoardDto> posts = boardService.findAllPosts();
+			request.setAttribute("boards", posts);
+			RequestDispatcher rd = request.getRequestDispatcher("./board/boardlist.jsp");
+			rd.forward(request, response);
 		}
 		
 	}
