@@ -14,6 +14,16 @@ public class BoardDto {
 		this.title = title;
 		this.content = content;
 	}
+	
+	
+
+	public BoardDto(int articleNo, String userId, String title, String content) {
+		super();
+		this.articleNo = articleNo;
+		this.userId = userId;
+		this.title = title;
+		this.content = content;
+	}
 
 	public BoardDto(int articleNo, String userId, String title, String content, int hitCount) {
 		super();
