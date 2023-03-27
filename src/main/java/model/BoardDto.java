@@ -6,6 +6,7 @@ public class BoardDto {
 	private String title;
 	private String content;
 	private int hitCount;
+	private String registerTime;
 
 	public BoardDto(String userId, String title, String content) {
 		super();
@@ -21,6 +22,16 @@ public class BoardDto {
 		this.title = title;
 		this.content = content;
 		this.hitCount = hitCount;
+	}
+
+	public BoardDto(int articleNo, String userId, String title, String content, int hitCount, String registerTime) {
+		super();
+		this.articleNo = articleNo;
+		this.userId = userId;
+		this.title = title;
+		this.content = content;
+		this.hitCount = hitCount;
+		this.registerTime = registerTime;
 	}
 
 	public int getArticleNo() {
@@ -61,5 +72,13 @@ public class BoardDto {
 
 	public void setHitCount(int hitCount) {
 		this.hitCount = hitCount;
+	}
+
+	public String getRegisterTime() {
+		return registerTime;
+	}
+
+	public void setRegisterTime(String registerTime) {
+		this.registerTime = registerTime;
 	}
 }
