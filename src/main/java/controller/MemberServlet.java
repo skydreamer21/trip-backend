@@ -147,7 +147,7 @@ public class MemberServlet extends HttpServlet {
 
 		else if (action.equalsIgnoreCase("logout")) { // 2. if 분기
 			session.invalidate();
-			response.sendRedirect(root + "/member?action=login");
+			response.sendRedirect(root + "/index.jsp");
 		}
 		
 		else if (action.equalsIgnoreCase("delete")) {
