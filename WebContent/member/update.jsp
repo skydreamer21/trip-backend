@@ -27,7 +27,7 @@ String email_domain = getCurSessionInfo.getEmail_domain();
 <div class="container mt-3">
   <h2>회원정보</h2>
   <form action="../member" method="post">
-    <input type="hidden"  id="action" name="action" value="updateaf">
+    <!-- <input type="hidden"  id="action" name="action" value="updateaf"> -->
     <div class="mb-3 mt-3">
       <label for="user_id">사용자 아이디</label>
       <input type="text" class="form-control member-detail" id="user_id" value=<%=user_id%> name="user_id" readonly>
@@ -51,8 +51,10 @@ String email_domain = getCurSessionInfo.getEmail_domain();
       <option value="google.com">google.com</option>
     </select>
   </div>
-    <button type="submit" class="btn btn-primary"> 수정하기 </button>
+   <button type="submit" class="btn btn-primary" formaction="../member?action=updateaf"> 수정하기</button>
+	<button type="submit" class="btn btn-danger" formaction="../member?action=delete"> 회원탈퇴</button>
   </form>
+  
 </div>
 
 </body>
