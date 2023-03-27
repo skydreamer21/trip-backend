@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import util.DBUtil;
 
 public class BoardDaoImpl implements iBoardDao {
@@ -39,7 +40,7 @@ public class BoardDaoImpl implements iBoardDao {
 				dtos.add(dto);
 			}
 		} catch (SQLException e) {
-			System.out.println("[ERROR] attraction exception : " + e);
+			System.out.println("[ERROR] all board exception : " + e);
 		} finally {
 			dbUtil.close(rs, psmt, conn);
 		}
@@ -47,9 +48,36 @@ public class BoardDaoImpl implements iBoardDao {
 	}
 
 	@Override
-	public BoardDto selectByArticleNo() {
-		// TODO Auto-generated method stub
-		return null;
+	public BoardDto selectByArticleNo(int articleNo) {
+		BoardDto dto = null;
+		StringBuilder sql = new StringBuilder();
+		sql.append(" select * from board ")
+			.append(" where article_no=? ");
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = dbUtil.getConnection();
+			psmt = conn.prepareStatement(sql.toString());
+			psmt.setInt(1, articleNo);
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				int j=1;
+				dto = new BoardDto(rs.getInt(j++),
+						rs.getString(j++),
+						rs.getString(j++),
+						rs.getString(j++),
+						rs.getInt(j++), 
+						rs.getString(j++));
+			}
+		} catch (SQLException e) {
+			System.out.println("[ERROR] board select exceptions : " + e);
+		} finally {
+			dbUtil.close(rs, psmt, conn);
+		}
+		return dto;
 	}
 
 	@Override
@@ -77,4 +105,6 @@ public class BoardDaoImpl implements iBoardDao {
 		}
 		return count > 0;
 	}
+	
+	
 }

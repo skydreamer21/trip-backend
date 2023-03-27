@@ -68,6 +68,12 @@ public class BoardServlet extends HttpServlet {
 			request.setAttribute("boards", posts);
 			RequestDispatcher rd = request.getRequestDispatcher("./board/boardlist.jsp");
 			rd.forward(request, response);
+		} else if(action.equalsIgnoreCase("detail")) {
+			int articleNo = Integer.parseInt(request.getParameter("articleNo"));
+			BoardDto post = boardService.findPost(articleNo);
+			request.setAttribute("board", post);
+			RequestDispatcher rd = request.getRequestDispatcher("./board/boardDetail.jsp");
+			rd.forward(request, response);
 		}
 		
 	}

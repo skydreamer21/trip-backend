@@ -26,4 +26,13 @@ public class BoardServiceImpl implements IBoardService {
 	public List<BoardDto> findAllPosts() {
 		return dao.selectAllBoard();
 	}
+
+	@Override
+	public BoardDto findPost(int articleNo) {
+		// TODO : 유효성 검증
+		
+		// TODO : 조회수 올리기
+		
+		return dao.selectByArticleNo(articleNo);
+	}
 }
