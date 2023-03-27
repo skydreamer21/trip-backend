@@ -8,7 +8,7 @@
 </head>
 <body>
 	<%@include file="/common/head.jsp"%>
-	<div id="section">
+	<div id="section" class="container-fluid">
 		<div id="tboard">
 			<h1>글목록</h1>
 			<table class="table table-striped">
@@ -21,7 +21,7 @@
 				<c:forEach var="board" items="${boards}" varStatus="vs">
 					<tr>
 						<td><a
-							href="../board?action=detail&acticleNo=${board.articleNo}">${vs.count}</a></td>
+							href="${root}/boardController?action=detail&articleNo=${board.articleNo}">${vs.count}</a></td>
 						<td>${board.title}</td>
 						<td>${board.userId}</td>
 						<td>${board.hitCount}</td>
