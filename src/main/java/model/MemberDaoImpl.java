@@ -33,7 +33,7 @@ public class MemberDaoImpl implements IMemberDao {
 			psmt.setString(i++, dto.getUser_password());
 			psmt.setString(i++, dto.getEmail_id());
 			psmt.setString(i++, dto.getEmail_domain());
-			psmt.setBoolean(i++, dto.isAvailable());
+			psmt.setBoolean(i++, true);
 
 			count = psmt.executeUpdate();
 		} catch (SQLException e) {
@@ -106,10 +106,12 @@ public class MemberDaoImpl implements IMemberDao {
 		return count > 0 ? true : false;
 	}
 	
-	public boolean deleteUserInfo(MemberDto dto) {
+	public boolean deleteUserInfo(MemberDto dto) { // boolean값만 false로 바꿔줌
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append(" DELETE FROM members WHERE user_id=? ");
+		sql.append(" UPDATE members SET ")
+		.append(" available=? ")
+		.append(" WHERE user_id=? ");
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -117,10 +119,13 @@ public class MemberDaoImpl implements IMemberDao {
 		try {
 			conn = dbutil.getConnection();
 			psmt = conn.prepareStatement(sql.toString());
-			psmt.setString(1, dto.getUser_id());
+			int i = 1;
+			psmt.setBoolean(i++, false);
+			psmt.setString(i++, dto.getUser_id());
+
 			count = psmt.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println("delete Exception :" + e);
+			System.out.println("delete Exception:" + e);
 		} finally {
 			dbutil.close(psmt, conn);
 		}
