@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface iBoardDao {
 	List<BoardDto> selectAllBoard();
-	BoardDto selectByArticleNo();
+	BoardDto selectByArticleNo(int articleNo);
 	boolean insertBoard(BoardDto dto);
 }
