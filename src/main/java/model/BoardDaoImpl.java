@@ -154,8 +154,27 @@ public class BoardDaoImpl implements iBoardDao {
 		}
 		return count > 0;
 	}
-	
-	
-	
-	
+
+	@Override
+	public boolean deleteBoard(int articleNo) {
+		StringBuilder sql = new StringBuilder();
+		sql.append(" delete from board")
+			.append(" where article_no=? ");
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int count = 0;
+		
+		try {
+			conn = dbUtil.getConnection();
+			psmt = conn.prepareStatement(sql.toString());
+			psmt.setInt(1, articleNo);
+			count = psmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("[ERROR] board delete exceptions : " + e);
+		} finally {
+			dbUtil.close(psmt, conn);
+		}
+		return count > 0;
+	}
 }

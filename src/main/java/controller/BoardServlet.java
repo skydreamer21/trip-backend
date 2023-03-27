@@ -94,6 +94,16 @@ public class BoardServlet extends HttpServlet {
 				RequestDispatcher rd = request.getRequestDispatcher("./boardController?action=detail&articleNo="+articleNo);
 				rd.forward(request, response);
 			}
+		} else if (action.equalsIgnoreCase("delete")) {
+			int articleNo = Integer.parseInt(request.getParameter("articleNo"));
+			boolean isS = boardService.removeBoard(articleNo);
+			if (isS) {
+				response.sendRedirect("./boardController?action=boardlist");
+			} else {
+				request.setAttribute("msg", "글 삭제에 실패했습니다.");
+				RequestDispatcher rd = request.getRequestDispatcher("./boardController?action=detail&articleNo="+articleNo);
+				rd.forward(request, response);
+			}
 		}
 		
 		

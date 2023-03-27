@@ -9,4 +9,5 @@ public interface IBoardService {
 	List<BoardDto> findAllPosts();
 	BoardDto findPost(int articleNo);
 	boolean updateBoard(BoardDto dto);
+	boolean removeBoard(int articleNo);
 }
