@@ -38,6 +38,7 @@ public class MemberServlet extends HttpServlet {
 		String path = "";
 		String root = request.getContextPath();
 		String action = request.getParameter("action");
+		HttpSession session = request.getSession();
 
 		// 회원가입 페이지 이동
 		if (action.equalsIgnoreCase("registry")) {
@@ -82,9 +83,10 @@ public class MemberServlet extends HttpServlet {
 			String user_id = request.getParameter("user_id");
 			String user_password = request.getParameter("user_password");
 			MemberDto login = mservice.login(new MemberDto(user_id, user_password));
-			HttpSession session = request.getSession(); // 세션 저장
+			
 			if (login != null) { // 
 				if (login.isAvailable()) {// 이용 가능한 유저라면
+					
 					session.setAttribute("login", login);
 					out.write("<script>" + " alert('로그인에 성공하였습니다.');" + " location.href='index.jsp';" + "</script>");
 					out.close();
@@ -102,11 +104,16 @@ public class MemberServlet extends HttpServlet {
 
 		}
 
+		//회원 정보 조회 -> 로그인 안했으면 못드감
 		else if (action.equalsIgnoreCase("detail")) {
 			
 			path = root + "/member/detail.jsp";
+			MemberDto login = (MemberDto) session.getAttribute("login");
+			if (login == null) {
+				out.write("<script>" + " alert('로그인을 해주세요...'); " + " location.href='index.jsp';" + "</script>");
+				out.close();
+			}
 			response.sendRedirect(path);
-			
 			return;
 		}
 
@@ -125,10 +132,12 @@ public class MemberServlet extends HttpServlet {
 			String user_password = request.getParameter("user_password");
 			String email_id = request.getParameter("email_id");
 			String email_domain = request.getParameter("email_domain");
+			
 			boolean isS = mservice.update(new MemberDto(user_id, user_name, user_password, email_id, email_domain));
 			
 			if (isS) { // 5
 				out.write("<script>" + " alert('회원 정보가 정상적으로 수정되었습니다..'); alert('다시 로그인해주세요.');" + " location.href='index.jsp';" + "</script>");
+				session.invalidate();
 				out.close();
 			} else {
 				out.write("<script>" + " alert('Error!!!!'); alert('회원 정보가 수정되지 않았습니다. 다시 시도해주세요.');" + " location.href='index.jsp';" + "</script>");
@@ -137,9 +146,30 @@ public class MemberServlet extends HttpServlet {
 		}
 
 		else if (action.equalsIgnoreCase("logout")) { // 2. if 분기
-			HttpSession session = request.getSession();
 			session.invalidate();
 			response.sendRedirect(root + "/member?action=login");
+		}
+		
+		else if (action.equalsIgnoreCase("delete")) {
+			MemberDto login = (MemberDto) session.getAttribute("login");
+			
+			if (login != null) { // 로그인 되어있다면
+				boolean isS = mservice.resign(login);
+				if(isS) {
+					out.write("<script>" + " alert('회원탈퇴 되었습니다.'); " + " location.href='index.jsp';" + "</script>");
+					session.invalidate();
+					out.close();
+				}
+				else {
+					out.write("<script>" + " alert('회원탈퇴 실패!! 이유: 모름'); " + " location.href='index.jsp';" + "</script>");
+					out.close();
+				}
+			}
+			else { //로그인 안되어있으면
+				out.write("<script>" + " alert('회원탈퇴 실패!! 이유 : 로그인하세요.'); " + " location.href='index.jsp';" + "</script>");
+				out.close();
+				
+			}
 		}
 	}
 }

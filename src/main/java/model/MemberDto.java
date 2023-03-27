@@ -25,7 +25,7 @@ public class MemberDto {
 		this.user_password = user_password;
 		this.email_id = email_id;
 		this.email_domain = email_domain;
-		this.available = true;
+		this.available = available;
 	}
 	
 	
