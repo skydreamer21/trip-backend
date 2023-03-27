@@ -18,8 +18,9 @@ public class MemberDaoImpl implements IMemberDao {
 	@Override
 	public boolean insertUserInfo(MemberDto dto) {
 		StringBuilder sql = new StringBuilder();
-		sql.append(" INSERT INTO members(user_id,user_name,user_password, ").append(" email_id,email_domain ) ")
-				.append(" VALUES(?,?,?,?,?) ");
+		sql.append(" INSERT INTO members(user_id,user_name,user_password, ")
+			.append(" email_id, email_domain, available ) ")
+				.append(" VALUES(?,?,?,?,?,?) ");
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		int count = 0;
@@ -32,6 +33,7 @@ public class MemberDaoImpl implements IMemberDao {
 			psmt.setString(i++, dto.getUser_password());
 			psmt.setString(i++, dto.getEmail_id());
 			psmt.setString(i++, dto.getEmail_domain());
+			psmt.setBoolean(i++, dto.isAvailable());
 
 			count = psmt.executeUpdate();
 		} catch (SQLException e) {
@@ -47,7 +49,7 @@ public class MemberDaoImpl implements IMemberDao {
 	public MemberDto selectUserInfo(MemberDto dto) {
 		MemberDto login = null;
 		StringBuilder sql = new StringBuilder();
-		sql.append(" SELECT user_id,user_name, email_id,email_domain  ");
+		sql.append(" SELECT * ");
 		sql.append(" FROM members WHERE user_id=? and user_password=? ");
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -61,11 +63,12 @@ public class MemberDaoImpl implements IMemberDao {
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				int j = 1;
-				login = new MemberDto(rs.getString(j++), rs.getString(j++), "", rs.getString(j++), rs.getString(j++));
+				login = new MemberDto(rs.getString(j++), rs.getString(j++), rs.getString(j++), rs.getString(j++), rs.getString(j++), rs.getBoolean(j++));
 			}
 
 		} catch (SQLException e) {
 			System.out.println("login Exception :" + e);
+			return null;
 		} finally {
 			dbutil.close(rs, psmt, conn);
 		}
