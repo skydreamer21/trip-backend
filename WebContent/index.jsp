@@ -15,6 +15,7 @@
   <a href='${root}/member?action=registry'> 회원가입 </a>
   <a href='${root}/member?action=detail'> 회원정보 조회</a>
   <a href='${root}/attraction/attraction.jsp'>관광지 조회</a>
+  <a href='${root}/boardController?action=boardwrite'>글쓰기</a>
 </div>
 </body>
 </html>
