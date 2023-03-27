@@ -36,4 +36,11 @@ public class BoardServiceImpl implements IBoardService {
 		
 		return dao.selectByArticleNo(articleNo);
 	}
+
+	@Override
+	public boolean updateBoard(BoardDto dto) {
+		return dao.updateBoard(dto);
+	}
+	
+	
 }
