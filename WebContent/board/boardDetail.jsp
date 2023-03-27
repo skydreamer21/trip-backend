@@ -49,7 +49,7 @@
 <div style="float: right">
  <form  style="display: inline" action="${root}/boardController" method="post">
 	<input type="hidden" name="action" value="updateBoard"/>
-	<input type="hidden" name="article_no" value="${board.articleNo}"/>
+	<input type="hidden" name="articleNo" value="${board.articleNo}"/>
 	<input type="submit" value="수정" />
 </form>
 <form style="display: inline" action="${root}/boardController" method="post">

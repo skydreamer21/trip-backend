@@ -30,5 +30,6 @@
 			</table>
 		</div>
 	</div>
+	<a href="${root}/index.jsp">Home으로 돌아가기</a>
 </body>
 </html>
