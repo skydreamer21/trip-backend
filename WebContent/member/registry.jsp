@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,12 +11,10 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<%
-String root=request.getContextPath();
-%>
+<c:set value="${pageContext.request.contextPath}" var="root"></c:set>
 <div class="container mt-3">
   <h2>회원가입</h2>
-  <form action="../member" method="post">
+  <form action="${root}/member" method="post">
     <input type="hidden"  id="action" name="action" value="registryaf">
     <div class="mb-3 mt-3">
       <label for="user_id">사용자 아이디</label>
