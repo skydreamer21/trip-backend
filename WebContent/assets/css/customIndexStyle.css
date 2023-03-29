@@ -1,0 +1,11 @@
+@charset "EUC-KR";
+
+
+div.search-wrapper > div > :last-child {
+	position: relative;
+}
+
+div.search-btn {
+	position: absolute;
+	bottom: 0;
+}
