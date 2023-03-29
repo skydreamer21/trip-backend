@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="../assets/css/attraction.css">
 <title>Attraction Info</title>
 <%@ include file="/common/head.jsp" %>
+<link rel="stylesheet" href="${root}/assets/css/attraction.css">
 </head>
 <body>
 	<!--====== SEARCH PART START ======-->
@@ -79,7 +79,12 @@
 
 	<!--====== TABLE START ======-->
 	<div class="row">
-		<table class="table table-striped" style="display: none">
+		<c:if test="${searchFromHome ne null}">
+			<table class="table table-striped">
+		</c:if>
+		<c:if test="${searchFromHome eq null}">
+			<table class="table table-striped" style="display: none">
+		</c:if>
 			<thead>
 				<tr>
 					<th>대표이미지</th>
@@ -90,7 +95,20 @@
 					<th>조회수</th>
 				</tr>
 			</thead>
-			<tbody id="trip-list"></tbody>
+			<tbody id="trip-list">
+				<c:if test="${searchFromHome ne null}">
+					<c:forEach var="attraction" items="${searchFromHome}">
+						<tr
+							onclick="moveCenter(${attraction.latitude}, ${attraction.longitude});">
+							<td><img src="${attraction.firstImage}" width="100px"></td>
+							<td>${attraction.title}</td>
+							<td>${attraction.contentTypeId}</td>
+							<td>${attraction.addr}</td>
+							<td>${attraction.tel}</td>
+						</tr>
+					</c:forEach>
+				</c:if>
+			</tbody>
 		</table>
 	</div>
 	<!--====== TABLE END ======-->
@@ -104,7 +122,7 @@
 	
 		// ================ Sido, Gugun Option START ================
 		// index page 로딩 후 전국의 시도 설정.
-		let areaUrl = "../attraction?action=sido"
+		let areaUrl = "${root}/attraction?action=sido"
 		
 		fetch(areaUrl, { method: "GET" })
 		    .then((response) => response.json())
@@ -122,7 +140,7 @@
 		    const smallAreaOption = document.querySelector("#location");
 
 		    const sidoCode = document.querySelector("#category").value;
-		    let smallAreaUrl = "../attraction?action=gugun&sidoCode="+sidoCode;
+		    let smallAreaUrl = "${root}/attraction?action=gugun&sidoCode="+sidoCode;
 		    
 		    fetch(smallAreaUrl, { method: "GET" })
 		        .then((response) => response.json())
@@ -170,7 +188,7 @@
 		    let keyword = document.getElementById("keyword").value;
 // 		    console.log(areaCode, gugunCode, content, keyword);
 
-		    let searchUrl = "../attraction?action=search";
+		    let searchUrl = "${root}/attraction?action=search";
 
 		    searchUrl += "&sidoCode=" + sidoCode;
 		    searchUrl += "&gugunCode=" + gugunCode;
@@ -190,6 +208,19 @@
 	    };
 		// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 		const map = new kakao.maps.Map(mapContainer, mapOption);
+		
+		
+		if ("${searchFromHome[0].title}" != null) {
+			const positions = [];
+			<c:forEach var="attraction" items="${searchFromHome}">
+		        positions.push({
+			        title: "${attraction.title}",
+			        latlng: new kakao.maps.LatLng(${attraction.latitude}, ${attraction.longitude}),
+		        });
+			</c:forEach>
+			console.log(positions);
+			displayMarker(positions);
+		}
 
 
 		let positions = [];
@@ -216,10 +247,10 @@
 		        positions.push(markerInfo);
 		    });
 		    document.getElementById("trip-list").innerHTML = tripList;
-		    displayMarker();
+		    displayMarker(positions);
 		}
 		
-		function displayMarker() {
+		function displayMarker(positions) {
 		    // 마커 이미지의 이미지 주소입니다
 		    let imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 
