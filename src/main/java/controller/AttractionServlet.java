@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -63,6 +64,17 @@ public class AttractionServlet extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			out.write(gson.toJson(attractionDtos));
 			out.flush();
+		} else if (action.equalsIgnoreCase("searchInHome")) {
+			int sidoCode = Integer.parseInt(request.getParameter("sidoCode"));
+			int gugunCode = Integer.parseInt(request.getParameter("gugunCode"));
+			int contentTypeId = Integer.parseInt(request.getParameter("contentTypeId"));
+			String keyword = request.getParameter("keyword");
+			
+			List<AttractionDto> attractionDtos = attractionService.findAttractions(sidoCode, gugunCode, contentTypeId, keyword);
+			request.setAttribute("searchFromHome", attractionDtos);
+			request.setAttribute("size", attractionDtos.size());
+			RequestDispatcher rd = request.getRequestDispatcher("./attraction/attraction.jsp");
+			rd.forward(request, response);
 		}
 		
 	}
