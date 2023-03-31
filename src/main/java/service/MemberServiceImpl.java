@@ -1,5 +1,7 @@
 package service;
 
+import java.util.List;
+
 import model.IMemberDao;
 import model.MemberDaoImpl;
 import model.MemberDto;
@@ -57,4 +59,11 @@ public class MemberServiceImpl implements IMemberService {
 		return mdao.deleteUserInfo(dto);
 	}
 
+	@Override
+	public List<MemberDto> findAllMembers() {
+		
+		return mdao.selectAllMembers();
+	}
+
+	
 }

@@ -1,5 +1,7 @@
 package service;
 
+import java.util.List;
+
 import model.MemberDto;
 
 public interface IMemberService {
@@ -8,4 +10,5 @@ public interface IMemberService {
 	boolean userCheck(MemberDto dto);
 	boolean update(MemberDto dto);
 	boolean resign(MemberDto dto);
+	List<MemberDto> findAllMembers();
 }
