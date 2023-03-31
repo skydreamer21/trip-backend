@@ -153,10 +153,17 @@ public class MemberServlet extends HttpServlet {
 		}
 		
 		else if (action.equalsIgnoreCase("delete")) {
-			MemberDto login = (MemberDto) session.getAttribute("login");
+			String user_id = request.getParameter("user_id");
+			MemberDto user;
+			if (user_id == null) {
+				user = (MemberDto) session.getAttribute("login");
+			} else {
+				user = (MemberDto) mservice.findMemberById(user_id);
+			}
 			
-			if (login != null) { // 로그인 되어있다면
-				boolean isS = mservice.resign(login);
+			
+			if (user != null) { // 로그인 되어있다면
+				boolean isS = mservice.resign(user);
 				if(isS) {
 					out.write("<script>" + " alert('회원탈퇴 되었습니다.'); " + " location.href='index.jsp';" + "</script>");
 					session.invalidate();
