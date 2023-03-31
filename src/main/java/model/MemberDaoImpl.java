@@ -141,7 +141,7 @@ public class MemberDaoImpl implements IMemberDao {
 		List<MemberDto> dtos = new ArrayList<>();
 		StringBuilder sql = new StringBuilder();
 		sql.append(" select * from members ")
-			.append(" where not user_id=? ");
+			.append(" where not user_id=? and available=? ");
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -149,7 +149,9 @@ public class MemberDaoImpl implements IMemberDao {
 		try {
 			conn = dbutil.getConnection();
 			psmt = conn.prepareStatement(sql.toString());
-			psmt.setString(1, "admin");
+			int i =1;
+			psmt.setString(i++, "admin");
+			psmt.setBoolean(i++, true);
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				int j = 1;
@@ -165,12 +167,46 @@ public class MemberDaoImpl implements IMemberDao {
 				dtos.add(dto);
 			}
 		} catch (SQLException e) {
-			System.out.println("[ERROR] all board exception : " + e);
+			System.out.println("[ERROR] all members exception : " + e);
 		} finally {
 			dbutil.close(rs, psmt, conn);
 		}
 		return dtos;
 	}
-	
 
+	@Override
+	public MemberDto selectMember(String user_id) {
+		MemberDto dto = null;
+		StringBuilder sql = new StringBuilder();
+		sql.append(" select * from members ")
+			.append(" where user_id=? ");
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = dbutil.getConnection();
+			psmt = conn.prepareStatement(sql.toString());
+			int i = 1;
+			psmt.setString(1, user_id);
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				int j=1;
+				dto = new MemberDto(rs.getString(j++),
+						rs.getString(j++),
+						rs.getString(j++),
+						rs.getString(j++),
+						rs.getString(j++), 
+						rs.getString(j++),
+						rs.getBoolean(j++)
+						);
+			}
+		} catch (SQLException e) {
+			System.out.println("[ERROR] member select exceptions : " + e);
+		} finally {
+			dbutil.close(rs, psmt, conn);
+		}
+		return dto;
+	}
 }

@@ -8,4 +8,5 @@ public interface IMemberDao {
 	boolean updateUserInfo(MemberDto dto); // 유저 정보 수정 
 	boolean deleteUserInfo(MemberDto dto); // 유저 삭제
 	List<MemberDto> selectAllMembers();
+	MemberDto selectMember(String user_id);
 }
