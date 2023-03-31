@@ -54,8 +54,9 @@ public class BoardServlet extends HttpServlet {
 			String userId = request.getParameter("userId");
 			String title = request.getParameter("title");
 			String content = request.getParameter("content");
+			boolean isAnnouncement = request.getParameter("announcement") != null;
 			
-			boolean isS = boardService.write(new BoardDto(userId, title, content));
+			boolean isS = boardService.write(new BoardDto(userId, title, content, isAnnouncement));
 			if (isS) {
 				response.sendRedirect("./boardController?action=boardlist");
 			} else {
@@ -104,6 +105,10 @@ public class BoardServlet extends HttpServlet {
 				RequestDispatcher rd = request.getRequestDispatcher("./boardController?action=detail&articleNo="+articleNo);
 				rd.forward(request, response);
 			}
+		} else if(action.equalsIgnoreCase("announcement")) {
+			request.setAttribute("announcement", 1);
+			RequestDispatcher rd = request.getRequestDispatcher("./board/boardwrite.jsp");
+			rd.forward(request, response);
 		}
 		
 		
