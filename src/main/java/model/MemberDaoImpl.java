@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import util.DBUtil;
 
 public class MemberDaoImpl implements IMemberDao {
@@ -64,7 +67,6 @@ public class MemberDaoImpl implements IMemberDao {
 			while (rs.next()) {
 				int j = 1;
 				login = new MemberDto(rs.getString(j++), rs.getString(j++), rs.getString(j++), rs.getString(j++), rs.getString(j++), rs.getString(j++),rs.getBoolean(j++));
-				System.out.println(login.isAvailable());
 			}
 
 		} catch (SQLException e) {
@@ -133,7 +135,42 @@ public class MemberDaoImpl implements IMemberDao {
 
 		return count > 0 ? true : false;
 	}
-	
+
+	@Override
+	public List<MemberDto> selectAllMembers() {
+		List<MemberDto> dtos = new ArrayList<>();
+		StringBuilder sql = new StringBuilder();
+		sql.append(" select * from members ")
+			.append(" where not user_id=? ");
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+			conn = dbutil.getConnection();
+			psmt = conn.prepareStatement(sql.toString());
+			psmt.setString(1, "admin");
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				int j = 1;
+				MemberDto dto = new MemberDto(
+						rs.getString(j++), 
+						rs.getString(j++),
+						rs.getString(j++),
+						rs.getString(j++),
+						rs.getString(j++),
+						rs.getString(j++),
+						rs.getBoolean(j++)
+						);
+				dtos.add(dto);
+			}
+		} catch (SQLException e) {
+			System.out.println("[ERROR] all board exception : " + e);
+		} finally {
+			dbutil.close(rs, psmt, conn);
+		}
+		return dtos;
+	}
 	
 
 }
