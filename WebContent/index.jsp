@@ -26,6 +26,7 @@
 
 			<div class="contaianer mt-3">
 				<c:if test="${login ne null}">
+					<span>${login.user_id}님 반갑습니다.</span>
 					<a class="btn btn-primary" href='${root}/member?action=logout'>
 						로그아웃</a>
 					<a class="btn btn-primary" href='${root}/member?action=detail'>
@@ -36,6 +37,12 @@
 						href='${root}/boardController?action=boardwrite'>글쓰기</a>
 					<a class="btn btn-primary"
 						href='${root}/boardController?action=boardlist'>글목록</a>
+					<c:if test="${login.user_id eq 'admin'}">
+						<a class="btn btn-warning"
+						href='${root}/boardController?action=announcement'>공지사항 등록</a>
+						<a class="btn btn-warning"
+						href='${root}/boardController?action=boardlist'>회원 관리</a>
+					</c:if>
 				</c:if>
 
 				<c:if test="${login eq null}">

@@ -22,7 +22,7 @@
 					<tr>
 						<td><a
 							href="${root}/boardController?action=detail&articleNo=${board.articleNo}">${vs.count}</a></td>
-						<td>${board.title}</td>
+						<td><c:if test="${board.isAnnouncement}"><b>&lt;공지사항&gt;</b> </c:if>${board.title}</td>
 						<td>${board.userId}</td>
 						<td>${board.hitCount}</td>
 					</tr>
