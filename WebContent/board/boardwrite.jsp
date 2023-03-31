@@ -10,7 +10,12 @@
 	<%@include file="/common/head.jsp"%>
 	<div id="section">
 		<div id="tboard">
-			<h1>글작성</h1>
+			<c:if test="${announcement ne null}">
+				<h1>공지사항 등록</h1>
+			</c:if>
+			<c:if test="${announcement eq null}">
+				<h1>글작성</h1>
+			</c:if>
 			<form action="${root}/boardController" method="post">
 				<c:if test="${board ne null}">
 					<input type="hidden" name="action" value="boardUpdateaf" />
@@ -18,6 +23,9 @@
 				</c:if>
 				<c:if test="${board eq null}">
 					<input type="hidden" name="action" value="boardwriteaf" />
+				</c:if>
+				<c:if test="${announcement ne null}">
+					<input type="hidden" name=announcement value="1" />
 				</c:if>
 				<table>
 					<col width="40%">
@@ -44,7 +52,7 @@
 						<c:if test="${board eq null}">
 							<td colspan="2"><input type="submit" value="글쓰기" /></td>
 						</c:if>
-						
+
 					</tr>
 				</table>
 			</form>

@@ -36,7 +36,10 @@ public class BoardDaoImpl implements iBoardDao {
 						rs.getString(j++),
 						rs.getString(j++),
 						rs.getString(j++),
-						rs.getInt(j++));
+						rs.getInt(j++),
+						rs.getString(j++),
+						rs.getBoolean(j++)
+						);
 				dtos.add(dto);
 			}
 		} catch (SQLException e) {
@@ -83,8 +86,8 @@ public class BoardDaoImpl implements iBoardDao {
 	@Override
 	public boolean insertBoard(BoardDto dto) {
 		StringBuilder sql = new StringBuilder();
-		sql.append(" insert into board(user_id, title, content, hit, register_time) ")
-			.append(" values(?, ?, ?, 0, now()) ");
+		sql.append(" insert into board(user_id, title, content, hit, register_time, is_announcement) ")
+			.append(" values(?, ?, ?, 0, now(), ?) ");
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -97,6 +100,7 @@ public class BoardDaoImpl implements iBoardDao {
 			psmt.setString(i++, dto.getUserId());
 			psmt.setString(i++, dto.getTitle());
 			psmt.setString(i++, dto.getContent());
+			psmt.setBoolean(i++, dto.getIsAnnouncement());
 			count = psmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("[ERROR] mobile registry exceptions : " + e);
