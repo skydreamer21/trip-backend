@@ -63,7 +63,8 @@ public class MemberDaoImpl implements IMemberDao {
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				int j = 1;
-				login = new MemberDto(rs.getString(j++), rs.getString(j++), rs.getString(j++), rs.getString(j++), rs.getString(j++), rs.getBoolean(j++));
+				login = new MemberDto(rs.getString(j++), rs.getString(j++), rs.getString(j++), rs.getString(j++), rs.getString(j++), rs.getString(j++),rs.getBoolean(j++));
+				System.out.println(login.isAvailable());
 			}
 
 		} catch (SQLException e) {

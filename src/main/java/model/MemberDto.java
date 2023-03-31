@@ -6,6 +6,7 @@ public class MemberDto {
 	private String user_password;
 	private String email_id;
 	private String email_domain;
+	private String likeList;
 	private boolean available;
 	
 	public MemberDto() {
@@ -25,6 +26,17 @@ public class MemberDto {
 		this.user_password = user_password;
 		this.email_id = email_id;
 		this.email_domain = email_domain;
+		this.available = available;
+	}
+	
+	public MemberDto(String user_id, String user_name, String user_password, String email_id, String email_domain, String likeList, boolean available) {
+		super();
+		this.user_id = user_id;
+		this.user_name = user_name;
+		this.user_password = user_password;
+		this.email_id = email_id;
+		this.email_domain = email_domain;
+		this.likeList = likeList;
 		this.available = available;
 	}
 	
@@ -90,6 +102,14 @@ public class MemberDto {
 	public void setEmail_domain(String email_domain) {
 		this.email_domain = email_domain;
 	}
+
+	@Override
+	public String toString() {
+		return "MemberDto [user_id=" + user_id + ", user_name=" + user_name + ", user_password=" + user_password
+				+ ", email_id=" + email_id + ", email_domain=" + email_domain + ", available=" + available + "]";
+	}
+	
+	
 	
 	
 }
