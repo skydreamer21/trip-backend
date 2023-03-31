@@ -1,5 +1,7 @@
 package service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import model.BoardDaoImpl;
@@ -24,7 +26,22 @@ public class BoardServiceImpl implements IBoardService {
 
 	@Override
 	public List<BoardDto> findAllPosts() {
-		return dao.selectAllBoard();
+		List<BoardDto> boardList = dao.selectAllBoard();
+		Collections.sort(boardList, new Comparator<BoardDto>() {
+			@Override
+			public int compare(BoardDto b1, BoardDto b2) {
+				if (b1.getIsAnnouncement() ^ b2.getIsAnnouncement()) { // 다르면
+					if(b1.getIsAnnouncement()) {
+						return -1;
+					} else {
+						return 1;
+					}
+				} else {
+					return b2.getRegisterTime().compareTo(b1.getRegisterTime());
+				}
+			}
+		});
+		return boardList;
 	}
 
 	@Override
