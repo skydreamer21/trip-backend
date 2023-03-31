@@ -11,4 +11,5 @@ public interface IMemberService {
 	boolean update(MemberDto dto);
 	boolean resign(MemberDto dto);
 	List<MemberDto> findAllMembers();
+	MemberDto findMemberById(String user_id);
 }

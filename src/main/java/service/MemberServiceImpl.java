@@ -61,9 +61,12 @@ public class MemberServiceImpl implements IMemberService {
 
 	@Override
 	public List<MemberDto> findAllMembers() {
-		
 		return mdao.selectAllMembers();
 	}
 
+	@Override
+	public MemberDto findMemberById(String user_id) {
+		return mdao.selectMember(user_id);
+	}
 	
 }
