@@ -41,7 +41,7 @@
 						<a class="btn btn-warning"
 						href='${root}/boardController?action=announcement'>공지사항 등록</a>
 						<a class="btn btn-warning"
-						href='${root}/boardController?action=boardlist'>회원 관리</a>
+						href='${root}/member?action=memberList'>회원 관리</a>
 					</c:if>
 				</c:if>
 
