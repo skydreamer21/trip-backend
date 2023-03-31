@@ -48,6 +48,11 @@ public class MemberDto {
 		this.user_id = user_id;
 		this.user_password = user_password;
 	}
+	
+	public MemberDto(String user_id) {
+		super();
+		this.user_id = user_id;
+	}
 
 	
 	public MemberDto(String user_id, String user_name, String user_password, String email_id, String email_domain) {
