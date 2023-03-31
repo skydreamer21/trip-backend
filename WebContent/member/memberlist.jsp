@@ -20,11 +20,10 @@
 				</tr>
 				<c:forEach var="member" items="${members}" varStatus="vs">
 					<tr>
-						<td><a
-							href="${root}/boardController?action=detail&articleNo=${member.user_id}">${member.user_id}</a></td>
+						<td>${member.user_id}</td>
 						<td>${member.user_name}</td>
 						<td>${member.email_id}@${member.email_domain}</td>
-						<td><button class="btn btn-danger">삭제</button></td>
+						<td><a class="btn btn-danger" href="${root}/member?action=delete&user_id=${member.user_id}">삭제</a></td>
 					</tr>
 				</c:forEach>
 			</table>
