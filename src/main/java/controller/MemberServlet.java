@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.BoardDto;
 import model.MemberDto;
 import service.IMemberService;
 import service.MemberServiceImpl;
@@ -170,6 +172,13 @@ public class MemberServlet extends HttpServlet {
 				out.close();
 				
 			}
+		}
+		
+		else if (action.equalsIgnoreCase("memberList")) {
+			List<MemberDto> members = mservice.findAllMembers();
+			request.setAttribute("members", members);
+			RequestDispatcher rd = request.getRequestDispatcher("./member/memberlist.jsp");
+			rd.forward(request, response);
 		}
 	}
 }
