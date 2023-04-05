@@ -1,11 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="${root}/assets/css/nav.css">
+</head>
 <!-- Navigation-->
 <nav class="navbar navbar-light bg-light static-top">
 
 	<div class="container">
-		<a class="navbar-brand" href="#!">EnjoyTrip</a>
+		<a class="navbar-brand" href="${root}/index.jsp">Enjoy Trip</a>
 
 		<div class="contaianer mt-3">
 			<c:if test="${login ne null}">

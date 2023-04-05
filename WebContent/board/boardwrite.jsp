@@ -5,9 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>write</title>
+<%@include file="/common/head.jsp"%>
 </head>
 <body>
-	<%@include file="/common/head.jsp"%>
+	<!-- NAV -->
+	<%@ include file="/common/nav.jsp" %>
 	<div id="section">
 		<div id="tboard">
 			<c:if test="${announcement ne null}">
@@ -58,5 +60,7 @@
 			</form>
 		</div>
 	</div>
+	<!-- FOOTER -->
+	<%@ include file="/common/footer.jsp" %> 
 </body>
 </html>

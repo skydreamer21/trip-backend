@@ -116,7 +116,7 @@
 	</div>
 	<!--====== TABLE END ======-->
 	
-	<a href="${root}/index.jsp">Home으로 돌아가기</a>
+	
 	<!-- FOOTER -->
 	<%@ include file="/common/footer.jsp" %> 
 	

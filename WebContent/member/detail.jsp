@@ -6,16 +6,19 @@
 <head>
 <title>detail</title>
 <meta charset="utf-8">
+<%@ include file="/common/head.jsp"%>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
 	rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="../assets/css/member.css">
+<link rel="stylesheet" type="text/css" href="${root}/assets/css/member.css">
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </head>
 <body>
-	<c:set value="${pageContext.request.contextPath}" var="root"></c:set>
+	<!-- NAV -->
+	<%@ include file="/common/nav.jsp"%>
 
 	<%@ page import="model.MemberDto"%>
 	<%
@@ -63,8 +66,8 @@
 			</div>
 			<button type="submit" class="btn btn-primary">회원정보 수정</button>
 		</form>
-		<a href="${root}/index.jsp">Home으로 돌아가기</a>
 	</div>
-	
+	<!-- FOOTER -->
+	<%@ include file="/common/footer.jsp"%>
 </body>
 </html>
