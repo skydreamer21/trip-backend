@@ -18,42 +18,8 @@
 <%@ include file="/common/head.jsp"%>
 </head>
 <body>
-	<!-- Navigation-->
-	<nav class="navbar navbar-light bg-light static-top">
-
-		<div class="container">
-			<a class="navbar-brand" href="#!">EnjoyTrip</a>
-
-			<div class="contaianer mt-3">
-				<c:if test="${login ne null}">
-					<span>${login.user_id}님 반갑습니다.</span>
-					<a class="btn btn-primary" href='${root}/member?action=logout'>
-						로그아웃</a>
-					<a class="btn btn-primary" href='${root}/member?action=detail'>
-						회원정보 조회</a>
-					<a class="btn btn-primary" href='${root}/attraction/attraction.jsp'>관광지
-						조회</a>
-					<a class="btn btn-primary"
-						href='${root}/boardController?action=boardwrite'>글쓰기</a>
-					<a class="btn btn-primary"
-						href='${root}/boardController?action=boardlist'>글목록</a>
-					<c:if test="${login.user_id eq 'admin'}">
-						<a class="btn btn-warning"
-						href='${root}/boardController?action=announcement'>공지사항 등록</a>
-						<a class="btn btn-warning"
-						href='${root}/member?action=memberList'>회원 관리</a>
-					</c:if>
-				</c:if>
-
-				<c:if test="${login eq null}">
-					<a class="btn btn-primary" href='${root}/member?action=login'>
-						로그인 </a>
-					<a class="btn btn-primary" href='${root}/member?action=registry'>
-						회원가입 </a>
-				</c:if>
-			</div>
-		</div>
-	</nav>
+	<%@ include file="/common/nav.jsp" %>
+	
 	<!-- Masthead-->
 	<header class="masthead">
 		<div class="container position-relative">
@@ -133,36 +99,8 @@
 		</div>
 	</header>
 
-	<!-- Footer-->
-	<footer class="footer bg-light">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-6 h-100 text-center text-lg-start my-auto">
-					<ul class="list-inline mb-2">
-						<li class="list-inline-item"><a href="#!">About</a></li>
-						<li class="list-inline-item">⋅</li>
-						<li class="list-inline-item"><a href="#!">Contact</a></li>
-						<li class="list-inline-item">⋅</li>
-						<li class="list-inline-item"><a href="#!">Terms of Use</a></li>
-						<li class="list-inline-item">⋅</li>
-						<li class="list-inline-item"><a href="#!">Privacy Policy</a></li>
-					</ul>
-					<p class="text-muted small mb-4 mb-lg-0">&copy; Your Website
-						2023. All Rights Reserved.</p>
-				</div>
-				<div class="col-lg-6 h-100 text-center text-lg-end my-auto">
-					<ul class="list-inline mb-0">
-						<li class="list-inline-item me-4"><a href="#!"><i
-								class="bi-facebook fs-3"></i></a></li>
-						<li class="list-inline-item me-4"><a href="#!"><i
-								class="bi-twitter fs-3"></i></a></li>
-						<li class="list-inline-item"><a href="#!"><i
-								class="bi-instagram fs-3"></i></a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</footer>
+	<!-- FOOTER -->
+	<%@ include file="/common/footer.jsp" %> 
 	<script src="assets/js/indexJs.js"></script>
 	<script type="text/javascript">
 	

@@ -20,9 +20,11 @@
 	border: 1px solid #aabbcc;
 }
 </style>
+<%@include file="/common/head.jsp"%>
 </head>
 <body>
-	<%@include file="/common/head.jsp"%>
+	<!-- NAV -->
+	<%@ include file="/common/nav.jsp" %>
 
 	<div id="section">
 		<div id="tboard">
@@ -75,6 +77,8 @@
 			</div>
 		</div>
 	</div>
+	<!-- FOOTER -->
+	<%@ include file="/common/footer.jsp" %> 
 	<script>
 		const deleteBtn = document.querySelector("#board-delete");
 		deleteBtn.addEventListener("click", (event) => {

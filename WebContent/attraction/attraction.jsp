@@ -9,6 +9,9 @@
 <link rel="stylesheet" href="${root}/assets/css/attraction.css">
 </head>
 <body>
+	<!-- NAV -->
+	<%@ include file="/common/nav.jsp" %>
+	
 	<!--====== SEARCH PART START ======-->
 	<div class="search-area">
 		<div class="container bg-primary bg-gradient">
@@ -19,7 +22,7 @@
 							<div class="search-input">
 								<label for="category"><i
 									class="lni lni-grid-alt theme-color"></i></label> <select
-									name="category" id="category">
+									name="category" id="category" class="form-select">
 									<option value="none" selected disabled>지역</option>
 								</select>
 							</div>
@@ -28,7 +31,7 @@
 							<div class="search-input">
 								<label for="location"><i
 									class="lni lni-map-marker theme-color"></i></label> <select
-									name="location" id="location">
+									name="location" id="location" class="form-select">
 									<option value="0" selected disabled>시/군/구</option>
 								</select>
 							</div>
@@ -37,7 +40,7 @@
 							<div class="search-input">
 								<label for="contents"><i
 									class="lni lni-map-marker theme-color"></i></label> <select
-									name="contents" id="contents">
+									name="contents" id="contents" class="form-select">
 									<option value="0" selected disabled>관광지 유형</option>
 									<option value="12">관광지</option>
 									<option value="14">문화시설</option>
@@ -54,12 +57,12 @@
 							<div class="search-input">
 								<label for="keyword"><i
 									class="lni lni-search-alt theme-color"></i></label> <input type="text"
-									name="keyword" id="keyword" placeholder="키워드를 입력하세요." />
+									name="keyword" id="keyword" class="form-control" placeholder="키워드를 입력하세요." />
 							</div>
 						</div>
 						<div class="col-lg-2 col-sm-5 col-10">
 							<div class="search-btn">
-								<button id='search-btn' class="main-btn btn-hover">
+								<button id='search-btn' class="main-btn btn btn-info btn-hover">
 									Search <i class="lni lni-search-alt"></i>
 								</button>
 							</div>
@@ -113,7 +116,11 @@
 	</div>
 	<!--====== TABLE END ======-->
 	
-	<a href="${root}/index.jsp">Home으로 돌아가기</a>
+	
+	<!-- FOOTER -->
+	<%@ include file="/common/footer.jsp" %> 
+	
+	
 
 
 	<!--====== JAVASCRIPT IMPORT START ======-->

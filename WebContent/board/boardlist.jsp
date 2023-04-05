@@ -5,9 +5,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<%@include file="/common/head.jsp"%>
 </head>
 <body>
-	<%@include file="/common/head.jsp"%>
+	<!-- NAV -->
+	<%@ include file="/common/nav.jsp" %>
+	
 	<div id="section" class="container-fluid">
 		<div id="tboard">
 			<h1>글목록</h1>
@@ -30,6 +33,7 @@
 			</table>
 		</div>
 	</div>
-	<a href="${root}/index.jsp">Home으로 돌아가기</a>
+	<!-- FOOTER -->
+	<%@ include file="/common/footer.jsp" %> 
 </body>
 </html>
