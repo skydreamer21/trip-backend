@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="${root}/assets/css/attraction.css">
 </head>
 <body>
+	<%@ include file="/common/nav.jsp" %>
 	<!--====== SEARCH PART START ======-->
 	<div class="search-area">
 		<div class="container bg-primary bg-gradient">
