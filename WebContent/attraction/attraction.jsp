@@ -9,7 +9,9 @@
 <link rel="stylesheet" href="${root}/assets/css/attraction.css">
 </head>
 <body>
+	<!-- NAV -->
 	<%@ include file="/common/nav.jsp" %>
+	
 	<!--====== SEARCH PART START ======-->
 	<div class="search-area">
 		<div class="container bg-primary bg-gradient">
@@ -115,6 +117,10 @@
 	<!--====== TABLE END ======-->
 	
 	<a href="${root}/index.jsp">Home으로 돌아가기</a>
+	<!-- FOOTER -->
+	<%@ include file="/common/footer.jsp" %> 
+	
+	
 
 
 	<!--====== JAVASCRIPT IMPORT START ======-->
