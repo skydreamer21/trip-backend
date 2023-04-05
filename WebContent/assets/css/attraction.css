@@ -1,6 +1,18 @@
-@charset "EUC-KR";
+/* [START] SEARCH PART */
+div.search-wrapper div.row > :last-child {
+	position: relative;
+}
 
+div.search-btn {
+	position: absolute;
+	bottom: 0;
+}
+/* [END] SEARCH PART */
+
+/* [START] MAP */
 #map {
 	width: 500px;		
 	height: 400px;
 }
+/* [END] MAP  */
+
