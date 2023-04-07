@@ -1,3 +1,7 @@
+.content-container{
+	margin : 1em 10%;
+}
+
 /* [START] SEARCH PART */
 div.search-wrapper div.row > :last-child {
 	position: relative;
@@ -10,9 +14,29 @@ div.search-btn {
 /* [END] SEARCH PART */
 
 /* [START] MAP */
+.map-box {
+	margin-top: 20%;
+}
+
+.map-container{
+	position: relative;
+  width: 100%;
+  background-color: skyblue;
+}
+
+.map-container::after {
+  display: block;
+  content: "";
+  padding-bottom: 100%;
+}
+
 #map {
-	width: 500px;		
-	height: 400px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 /* [END] MAP  */
 
