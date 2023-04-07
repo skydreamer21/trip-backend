@@ -182,6 +182,7 @@
 			
 		// ================ Search Button Start ================
 		
+		
 		const searchBtn = document.querySelector("#search-btn");
 		searchBtn.addEventListener("click", (event) => {
 		    let sidoCode = document.getElementById("category").value;
@@ -230,12 +231,12 @@
 		}
 
 
-		let positions = [];
+		
 		function makeList(data) {
 // 		    console.log(data);
 		    document.querySelector("table").setAttribute("style", "display: ;");
 		    let tripList = "";
-		    positions = [];
+		    const positions = [];
 		    data.forEach((attraction) => {
 		    	
 		    	tripList += "<tr onclick=\"moveCenter(" + attraction.latitude + ", " + attraction.longitude + ");\">"
