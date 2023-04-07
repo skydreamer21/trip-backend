@@ -121,7 +121,7 @@
 				</table>
 
 				<!-- 페이지네이션 -->
-				<nav aria-label="...">
+				<nav id="page-nav" aria-label="...">
 					<ul class="pagination">
 						<li class="page-item disabled">
 							<a class="page-link">Previous</a>
