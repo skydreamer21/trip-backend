@@ -12,109 +12,123 @@
 	<!-- NAV -->
 	<%@ include file="/common/nav.jsp" %>
 	
-	<!--====== SEARCH PART START ======-->
-	<div class="search-area">
-		<div class="container bg-primary bg-gradient">
-			<div class="search-wrapper">
-				<form action="#">
-					<div class="row justify-content-center">
-						<div class="col-lg-3 col-sm-5 col-10">
-							<div class="search-input">
-								<label for="category"><i
-									class="lni lni-grid-alt theme-color"></i></label> <select
-									name="category" id="category" class="form-select">
-									<option value="none" selected disabled>지역</option>
-								</select>
+	<div class="content-container">
+		<!--====== SEARCH PART START ======-->
+		<div class="search-area">
+			<div class="container bg-primary bg-gradient">
+				<div class="search-wrapper">
+					<form action="#">
+						<div class="row justify-content-center">
+							<div class="col-lg-3 col-sm-5 col-10">
+								<div class="search-input">
+									<label for="category"><i
+										class="lni lni-grid-alt theme-color"></i></label> <select
+										name="category" id="category" class="form-select">
+										<option value="none" selected disabled>지역</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-lg-4 col-sm-5 col-10">
+								<div class="search-input">
+									<label for="location"><i
+										class="lni lni-map-marker theme-color"></i></label> <select
+										name="location" id="location" class="form-select">
+										<option value="0" selected disabled>시/군/구</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-lg-3 col-sm-5 col-10">
+								<div class="search-input">
+									<label for="contents"><i
+										class="lni lni-map-marker theme-color"></i></label> <select
+										name="contents" id="contents" class="form-select">
+										<option value="0" selected disabled>관광지 유형</option>
+										<option value="12">관광지</option>
+										<option value="14">문화시설</option>
+										<option value="15">축제공연행사</option>
+										<option value="25">여행코스</option>
+										<option value="28">레포츠</option>
+										<option value="32">숙박</option>
+										<option value="38">쇼핑</option>
+										<option value="39">음식점</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-lg-6 col-sm-5 col-10">
+								<div class="search-input">
+									<label for="keyword"><i
+										class="lni lni-search-alt theme-color"></i></label> <input type="text"
+										name="keyword" id="keyword" class="form-control" placeholder="키워드를 입력하세요." />
+								</div>
+							</div>
+							<div class="col-lg-2 col-sm-5 col-10">
+								<div class="search-btn">
+									<button id='search-btn' class="main-btn btn btn-info btn-hover">
+										Search <i class="lni lni-search-alt"></i>
+									</button>
+								</div>
 							</div>
 						</div>
-						<div class="col-lg-4 col-sm-5 col-10">
-							<div class="search-input">
-								<label for="location"><i
-									class="lni lni-map-marker theme-color"></i></label> <select
-									name="location" id="location" class="form-select">
-									<option value="0" selected disabled>시/군/구</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-lg-3 col-sm-5 col-10">
-							<div class="search-input">
-								<label for="contents"><i
-									class="lni lni-map-marker theme-color"></i></label> <select
-									name="contents" id="contents" class="form-select">
-									<option value="0" selected disabled>관광지 유형</option>
-									<option value="12">관광지</option>
-									<option value="14">문화시설</option>
-									<option value="15">축제공연행사</option>
-									<option value="25">여행코스</option>
-									<option value="28">레포츠</option>
-									<option value="32">숙박</option>
-									<option value="38">쇼핑</option>
-									<option value="39">음식점</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-lg-6 col-sm-5 col-10">
-							<div class="search-input">
-								<label for="keyword"><i
-									class="lni lni-search-alt theme-color"></i></label> <input type="text"
-									name="keyword" id="keyword" class="form-control" placeholder="키워드를 입력하세요." />
-							</div>
-						</div>
-						<div class="col-lg-2 col-sm-5 col-10">
-							<div class="search-btn">
-								<button id='search-btn' class="main-btn btn btn-info btn-hover">
-									Search <i class="lni lni-search-alt"></i>
-								</button>
-							</div>
-						</div>
-					</div>
-				</form>
+					</form>
+				</div>
 			</div>
 		</div>
-	</div>
-	<!--====== SEARCH PART END ======-->
-
-	<!--====== MAP START ======-->
-	<div id="map" class="mx-auto"></div>
-
-	<!--====== MAP END ======-->
-
-
-	<!--====== TABLE START ======-->
-	<div class="row">
-		<c:if test="${searchFromHome ne null}">
-			<table class="table table-striped">
-		</c:if>
-		<c:if test="${searchFromHome eq null}">
-			<table class="table table-striped" style="display: none">
-		</c:if>
-			<thead>
-				<tr>
-					<th>대표이미지</th>
-					<th>관광지명</th>
-					<th>관광지 분류</th>
-					<th>주소</th>
-					<th>전화번호</th>
-					<th>조회수</th>
-				</tr>
-			</thead>
-			<tbody id="trip-list">
+		<!--====== SEARCH PART END ======-->
+		
+		<div class="row container-fluid">
+			<!--====== MAP START ======-->
+			<div class="map-box col col-md-5 mx-auto">
+				<div class="map-container">
+					<div id="map"></div>
+				</div>
+			</div>
+			
+		
+			<!--====== MAP END ======-->
+			<!--====== TABLE START ======-->
+			<div class="col col-md-7 row">
+			
 				<c:if test="${searchFromHome ne null}">
-					<c:forEach var="attraction" items="${searchFromHome}">
-						<tr
-							onclick="moveCenter(${attraction.latitude}, ${attraction.longitude});">
-							<td><img src="${attraction.firstImage}" width="100px"></td>
-							<td>${attraction.title}</td>
-							<td>${attraction.contentTypeId}</td>
-							<td>${attraction.addr}</td>
-							<td>${attraction.tel}</td>
-						</tr>
-					</c:forEach>
+					<table class="table table-striped">
 				</c:if>
-			</tbody>
-		</table>
+				<c:if test="${searchFromHome eq null}">
+					<table class="table table-striped" style="display: none">
+				</c:if>
+					<thead>
+						<tr>
+							<th>대표이미지</th>
+							<th>관광지명</th>
+							<th>관광지 분류</th>
+							<th>주소</th>
+							<th>전화번호</th>
+							<th>조회수</th>
+						</tr>
+					</thead>
+					<tbody id="trip-list">
+						<c:if test="${searchFromHome ne null}">
+							<c:forEach var="attraction" items="${searchFromHome}">
+								<tr
+									onclick="moveCenter(${attraction.latitude}, ${attraction.longitude});">
+									<td><img src="${attraction.firstImage}" width="100px"></td>
+									<td>${attraction.title}</td>
+									<td>${attraction.contentTypeId}</td>
+									<td>${attraction.addr}</td>
+									<td>${attraction.tel}</td>
+								</tr>
+							</c:forEach>
+						</c:if>
+					</tbody>
+				</table>
+			</div>
+			<!--====== TABLE END ======-->
+		</div>
 	</div>
-	<!--====== TABLE END ======-->
+	
+	
+	
+
+
+
 	
 	
 	<!-- FOOTER -->
@@ -129,7 +143,7 @@
 	
 		// ================ Sido, Gugun Option START ================
 		// index page 로딩 후 전국의 시도 설정.
-		let areaUrl = "${root}/attraction?action=sido"
+		let areaUrl = "${root}/attraction?action=sido";
 		
 		fetch(areaUrl, { method: "GET" })
 		    .then((response) => response.json())
