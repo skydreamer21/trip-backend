@@ -245,11 +245,13 @@
 		const map = new kakao.maps.Map(mapContainer, mapOption);
 		
 		// ================ Search From Home Start ================
-
-		if (${searchFromHome} !== null) {
+		const attractions = '${searchFromHome}';
+		if (attractions !== '') {
+			attractions = JSON.parse(attractions);
 			const positions = [];
-			attractions = ${searchFromHome};
 			makeList(attractions);
+			const pageNav = document.querySelector("#page-nav");
+			pageNav.style.display = "block";
 		}
 
 		// ================ Search From Home End ================
