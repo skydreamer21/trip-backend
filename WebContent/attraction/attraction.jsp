@@ -114,13 +114,7 @@
 						<li class="page-item disabled">
 							<a class="page-link">Previous</a>
 						</li>
-						<li class="page-item"><a class="page-link" href="#">1</a></li>
-						<li class="page-item active" aria-current="page">
-							<a class="page-link" href="#">2</a>
-						</li>
-						<li class="page-item"><a class="page-link" href="#">3</a></li>
-						<li class="page-item"><a class="page-link" href="#">4</a></li>
-						<li class="page-item"><a class="page-link" href="#">5</a></li>
+						<!-- <li class="page-item"><a class="page-link" href="#">5</a></li> -->
 						<li class="page-item">
 							<a class="page-link" href="#">Next</a>
 						</li>
@@ -217,7 +211,7 @@
 		    let keyword = document.getElementById("keyword").value;
 // 		    console.log(areaCode, gugunCode, content, keyword);
 
-		    let searchUrl = "${root}/attraction?action=search";
+		    let searchUrl = "${root}/attraction?action=search&pageNo=1";
 
 		    searchUrl += "&sidoCode=" + sidoCode;
 		    searchUrl += "&gugunCode=" + gugunCode;
@@ -245,7 +239,7 @@
 		const map = new kakao.maps.Map(mapContainer, mapOption);
 		
 		// ================ Search From Home Start ================
-		const attractions = '${searchFromHome}';
+		let attractions = '${searchFromHome}';
 		if (attractions !== '') {
 			attractions = JSON.parse(attractions);
 			const positions = [];
