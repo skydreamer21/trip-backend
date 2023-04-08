@@ -163,7 +163,6 @@
 		    const smallAreaOption = document.querySelector("#location");
 
 		    const sidoCode = document.querySelector("#category").value;
-			console.log("sido : " + sidoCode);
 		    let smallAreaUrl = "${root}/attraction?action=gugun&sidoCode="+sidoCode;
 		    
 		    fetch(smallAreaUrl, { method: "GET" })
@@ -178,7 +177,6 @@
 			const hasSearchInfo = searchInfo !== '';
 			if (hasSearchInfo) {
 				searchInfo = JSON.parse('${searchInfo}');
-				console.log(searchInfo);
 			}
 
 // 		    console.log(data);
@@ -237,7 +235,6 @@
 		    fetch(searchUrl)
 		        .then((response) => response.json())
 		        .then((data) => {
-					console.log(data.pageNavInfo)
 					makeList(data.attractions)
 					const pageNav = document.querySelector("#page-nav");
 					pageNav.style.display = "block";
@@ -264,7 +261,6 @@
 
 			// contentType 선택
 			const contentTypeOptions = document.querySelectorAll("#contents option");
-			console.log(contentTypeOptions);
 			for (let contentTypeOption of contentTypeOptions) {
 				if (parseInt(contentTypeOption.value) === searchInfo.contentTypeId) {
 					contentTypeOption.selected = true;
@@ -281,7 +277,6 @@
 
 			const pageNavInfo = JSON.parse('${pageNavInfo}');
 			makePageNav(pageNavInfo);
-			console.log(pageNavInfo);
 		}
 		
 
@@ -302,7 +297,6 @@
 		    searchUrl += "&gugunCode=" + gugunCode;
 		    searchUrl += "&contentTypeId=" + contentTypeId;
 		    searchUrl += "&keyword=" + keyword;
-			console.log(searchUrl);
 			return searchUrl;
 		}
 		
@@ -359,7 +353,18 @@
 		function moveCenter(lat, lng) {
 		    map.setCenter(new kakao.maps.LatLng(lat, lng));
 		}
-
+		
+		function fetchSearchUrl(searchUrl) {
+			fetch(searchUrl)
+				.then((response) => response.json())
+				.then((data) => {
+					makeList(data.attractions)
+					const pageNav = document.querySelector("#page-nav");
+					pageNav.style.display = "block";
+					makePageNav(data.pageNavInfo);
+				});
+		}
+		
 		function makePageNav(pageNavInfo) {
 			const pageNav = document.querySelector("ul.pagination");
 			removePageList(pageNav);
@@ -377,12 +382,25 @@
 
 			if (pageNavInfo.hasPrevNav) {
 				prevBtn.classList.remove("disabled");
+				
+				prevBtn.addEventListener("click", function() {
+					const searchUrl = makeSearchUrl(pageNavInfo.startPage - pageNavInfo.maxPage);
+					event.preventDefault();
+					fetchSearchUrl(searchUrl);
+					this.removeEventListener("click", arguments.callee);
+				});
 			}
 
 			if (pageNavInfo.hasNextNav) {
 				nextBtn.classList.remove("disabled");
+				nextBtn.addEventListener("click", function() {
+					console.log("next clicked!");
+					const searchUrl = makeSearchUrl(pageNavInfo.startPage + pageNavInfo.maxPage);
+					event.preventDefault();
+					fetchSearchUrl(searchUrl);
+					this.removeEventListener("click", arguments.callee);
+				});
 			}
-			
 			
 			for (let i=0; i<pageNavInfo.pageCount; i++) {
 				const pageList = document.createElement("li");
@@ -397,11 +415,10 @@
 					fetch(searchUrl)
 						.then((response) => response.json())
 						.then((data) => {
-							console.log(data.pageNavInfo)
 							makeList(data.attractions)
 							const pageNav = document.querySelector("#page-nav");
 							pageNav.style.display = "block";
-							makePageNav(data.pageNavInfo);
+							changeActivePage(pageNo);
 						});
 				})
 				pageLink.textContent = pageNo;
@@ -410,6 +427,18 @@
 				}
 				pageList.appendChild(pageLink);
 				pageNav.insertBefore(pageList, nextBtn);
+			}
+		}
+
+		function changeActivePage(pageNo) {
+			const pages = document.querySelectorAll("ul.pagination li");
+			for (let i=1; i<pages.length-1; i++) {
+				if (pages[i].classList.contains("active")) {
+					pages[i].classList.remove("active");
+				}
+				if (parseInt(pages[i].textContent) === pageNo) {
+					pages[i].classList.add("active");
+				}
 			}
 		}
 

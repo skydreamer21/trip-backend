@@ -1,10 +1,13 @@
 package model;
 
+import service.constant.AttractionListConstant;
+
 public class PageNav {
 	private int pageCount;
 	private int itemCount;
 	private int startPage;
 	private int pageNo;
+	private int maxPage;
 	private boolean hasPrevNav;
 	private boolean hasNextNav;
 	
@@ -16,6 +19,7 @@ public class PageNav {
 		this.pageNo = pageNo;
 		this.hasPrevNav = hasPrevNav;
 		this.hasNextNav = hasNextNav;
+		this.maxPage = AttractionListConstant.PAGE_COUNT.getValue();
 	}
 
 	public int getPageCount() {
@@ -48,6 +52,14 @@ public class PageNav {
 
 	public void setPageNo(int pageNo) {
 		this.pageNo = pageNo;
+	}
+
+	public int getMaxPage() {
+		return maxPage;
+	}
+
+	public void setMaxPage(int maxPage) {
+		this.maxPage = maxPage;
 	}
 
 	public boolean isHasPrevNav() {
