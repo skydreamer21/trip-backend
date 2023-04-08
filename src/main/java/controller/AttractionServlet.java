@@ -58,9 +58,11 @@ public class AttractionServlet extends HttpServlet {
 			int sidoCode = Integer.parseInt(request.getParameter("sidoCode"));
 			int gugunCode = Integer.parseInt(request.getParameter("gugunCode"));
 			int contentTypeId = Integer.parseInt(request.getParameter("contentTypeId"));
+			int pageNo = Integer.parseInt(request.getParameter("pageNo"));
 			String keyword = request.getParameter("keyword");
 			
-			List<AttractionDto> attractionDtos = attractionService.findAttractions(sidoCode, gugunCode, contentTypeId, keyword);
+			List<AttractionDto> attractionDtos = attractionService.findAttractions(
+					sidoCode, gugunCode, contentTypeId, keyword, pageNo);
 			PrintWriter out = response.getWriter();
 			out.write(gson.toJson(attractionDtos));
 			out.flush();
@@ -68,9 +70,10 @@ public class AttractionServlet extends HttpServlet {
 			int sidoCode = Integer.parseInt(request.getParameter("sidoCode"));
 			int gugunCode = Integer.parseInt(request.getParameter("gugunCode"));
 			int contentTypeId = Integer.parseInt(request.getParameter("contentTypeId"));
+			int pageNo = Integer.parseInt(request.getParameter("pageNo"));
 			String keyword = request.getParameter("keyword");
 			
-			List<AttractionDto> attractionDtos = attractionService.findAttractions(sidoCode, gugunCode, contentTypeId, keyword);
+			List<AttractionDto> attractionDtos = attractionService.findAttractions(sidoCode, gugunCode, contentTypeId, keyword, pageNo);
 			request.setAttribute("searchFromHome", gson.toJson(attractionDtos));
 			RequestDispatcher rd = request.getRequestDispatcher("./attraction/attraction.jsp");
 			rd.forward(request, response);

@@ -8,6 +8,7 @@ import model.GugunDaoImpl;
 import model.GugunDto;
 import model.SidoDaoImpl;
 import model.SidoDto;
+import service.constant.AttractionListConstant;
 
 public class AttractionServiceImpl implements iAttractionService {
 	private static AttractionServiceImpl instance = new AttractionServiceImpl();
@@ -36,8 +37,11 @@ public class AttractionServiceImpl implements iAttractionService {
 	}
 
 	@Override
-	public List<AttractionDto> findAttractions(int sidoCode, int gugunCode, int contentTypeId, String keyword) {
-		return attractionDao.selectAttractions(sidoCode, gugunCode, contentTypeId, keyword);
+	public List<AttractionDto> findAttractions(int sidoCode, int gugunCode, int contentTypeId, String keyword, int pageNo) {
+		int offset = (pageNo-1) * AttractionListConstant.ITEM_COUNT.getValue();
+		return attractionDao.selectAttractions(
+				sidoCode, gugunCode, contentTypeId, keyword, 
+				offset, AttractionListConstant.ITEM_COUNT.getValue());
 	}
 	
 }
