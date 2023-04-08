@@ -204,18 +204,8 @@
 		    	alert("지역을 선택해주세요!");
 		    	return;
 		    }
-		    
-		    let gugunCode = document.getElementById("location").value;
-		    let contentTypeId = document.getElementById("contents").value;
-		    let keyword = document.getElementById("keyword").value;
-// 		    console.log(areaCode, gugunCode, content, keyword);
 
-		    let searchUrl = "${root}/attraction?action=search&pageNo=1";
-
-		    searchUrl += "&sidoCode=" + sidoCode;
-		    searchUrl += "&gugunCode=" + gugunCode;
-		    searchUrl += "&contentTypeId=" + contentTypeId;
-		    searchUrl += "&keyword=" + keyword;
+		    const searchUrl = makeSearchUrl(sidoCode);
 		    event.preventDefault();
 
 		    fetch(searchUrl)
@@ -254,7 +244,21 @@
 
 		// ================ Search From Home End ================
 
+		function makeSearchUrl(sidoCode) {
+			let gugunCode = document.getElementById("location").value;
+		    let contentTypeId = document.getElementById("contents").value;
+		    let keyword = document.getElementById("keyword").value;
+// 		    console.log(areaCode, gugunCode, content, keyword);
 
+		    let searchUrl = "${root}/attraction?action=search&pageNo=1";
+
+		    searchUrl += "&sidoCode=" + sidoCode;
+		    searchUrl += "&gugunCode=" + gugunCode;
+		    searchUrl += "&contentTypeId=" + contentTypeId;
+		    searchUrl += "&keyword=" + keyword;
+			console.log(searchUrl);
+			return searchUrl;
+		}
 		
 		function makeList(data) {
 // 		    console.log(data);
