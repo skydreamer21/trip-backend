@@ -227,7 +227,11 @@
 
 		    fetch(searchUrl)
 		        .then((response) => response.json())
-		        .then((data) => makeList(data));
+		        .then((data) => {
+					makeList(data)
+					const pageNav = document.querySelector("#page-nav");
+					pageNav.style.display = "block";
+				});
 		});
 
 		// ================ Search Button End ================
