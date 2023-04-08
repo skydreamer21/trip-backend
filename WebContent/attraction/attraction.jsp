@@ -104,20 +104,8 @@
 							<th>조회수</th>
 						</tr>
 					</thead>
-					<tbody id="trip-list">
-						<c:if test="${searchFromHome ne null}">
-							<c:forEach var="attraction" items="${searchFromHome}">
-								<tr
-									onclick="moveCenter(${attraction.latitude}, ${attraction.longitude});">
-									<td><img src="${attraction.firstImage}" width="100px"></td>
-									<td>${attraction.title}</td>
-									<td>${attraction.contentTypeId}</td>
-									<td>${attraction.addr}</td>
-									<td>${attraction.tel}</td>
-								</tr>
-							</c:forEach>
-						</c:if>
-					</tbody>
+					<!-- js에서 관광지 정보 넣어줌 -->
+					<tbody id="trip-list"></tbody>
 				</table>
 
 				<!-- 페이지네이션 -->
@@ -159,7 +147,7 @@
 	<!--====== JAVASCRIPT IMPORT START ======-->
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=493decc2eeb806790cc421e8e9a902e2"></script>
 	<script type="text/javascript">
-	
+
 		// ================ Sido, Gugun Option START ================
 		// index page 로딩 후 전국의 시도 설정.
 		let areaUrl = "${root}/attraction?action=sido";
@@ -241,6 +229,8 @@
 		        .then((response) => response.json())
 		        .then((data) => makeList(data));
 		});
+
+		// ================ Search Button End ================
 		
 		const mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	    mapOption = { 
@@ -250,18 +240,15 @@
 		// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 		const map = new kakao.maps.Map(mapContainer, mapOption);
 		
-		
-		if ("${searchFromHome[0].title}" != null) {
+		// ================ Search From Home Start ================
+
+		if (${searchFromHome} !== null) {
 			const positions = [];
-			<c:forEach var="attraction" items="${searchFromHome}">
-		        positions.push({
-			        title: "${attraction.title}",
-			        latlng: new kakao.maps.LatLng(${attraction.latitude}, ${attraction.longitude}),
-		        });
-			</c:forEach>
-			console.log(positions);
-			displayMarker(positions);
+			attractions = ${searchFromHome};
+			makeList(attractions);
 		}
+
+		// ================ Search From Home End ================
 
 
 		
