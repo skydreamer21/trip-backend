@@ -40,3 +40,16 @@ div.search-btn {
 }
 /* [END] MAP  */
 
+/* [START] PAGINATION */
+
+#page-nav {
+	display: none;
+}
+
+ul.pagination{
+	justify-content: center;
+}
+
+
+
+/* [END] PAGINATION */
