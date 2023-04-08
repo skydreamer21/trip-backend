@@ -2,7 +2,9 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,9 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 
 import model.AttractionDto;
 import model.GugunDto;
+import model.PageNav;
 import model.SidoDto;
 import service.AttractionServiceImpl;
 
@@ -63,8 +67,15 @@ public class AttractionServlet extends HttpServlet {
 			
 			List<AttractionDto> attractionDtos = attractionService.findAttractions(
 					sidoCode, gugunCode, contentTypeId, keyword, pageNo);
+			PageNav pageNavInfo = attractionService.findPageNavInfo(
+					sidoCode, gugunCode, contentTypeId, keyword, pageNo);
+			
+			Map<String, Object> responseData = new HashMap<>();
+			responseData.put("attractions", attractionDtos);
+			responseData.put("pageNavInfo", pageNavInfo);
+			
 			PrintWriter out = response.getWriter();
-			out.write(gson.toJson(attractionDtos));
+			out.write(gson.toJson(responseData));
 			out.flush();
 		} else if (action.equalsIgnoreCase("searchInHome")) {
 			int sidoCode = Integer.parseInt(request.getParameter("sidoCode"));
@@ -74,7 +85,10 @@ public class AttractionServlet extends HttpServlet {
 			String keyword = request.getParameter("keyword");
 			
 			List<AttractionDto> attractionDtos = attractionService.findAttractions(sidoCode, gugunCode, contentTypeId, keyword, pageNo);
+			PageNav pageNavInfo = attractionService.findPageNavInfo(
+					sidoCode, gugunCode, contentTypeId, keyword, pageNo);
 			request.setAttribute("searchFromHome", gson.toJson(attractionDtos));
+			request.setAttribute("pageNavInfo", gson.toJson(pageNavInfo));
 			RequestDispatcher rd = request.getRequestDispatcher("./attraction/attraction.jsp");
 			rd.forward(request, response);
 		}
