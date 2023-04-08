@@ -222,7 +222,8 @@
 		    fetch(searchUrl)
 		        .then((response) => response.json())
 		        .then((data) => {
-					makeList(data)
+					// console.log(data)
+					makeList(data.attractions)
 					const pageNav = document.querySelector("#page-nav");
 					pageNav.style.display = "block";
 				});
@@ -242,6 +243,8 @@
 		let attractions = '${searchFromHome}';
 		if (attractions !== '') {
 			attractions = JSON.parse(attractions);
+			const pageNavInfo = JSON.parse('${pageNavInfo}');
+			// console.log(pageNavInfo);
 			const positions = [];
 			makeList(attractions);
 			const pageNav = document.querySelector("#page-nav");
