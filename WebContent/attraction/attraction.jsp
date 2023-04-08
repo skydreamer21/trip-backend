@@ -146,6 +146,7 @@
 		// index page 로딩 후 전국의 시도 설정.
 		let areaUrl = "${root}/attraction?action=sido";
 		
+		// Attraction page로 넘어올 때 단 한번만 실행됨.
 		fetch(areaUrl, { method: "GET" })
 		    .then((response) => response.json())
 		    .then((data) => makeOption(data, "category"));
@@ -199,8 +200,12 @@
 		    });
 
 			// sido 설정할 때만 setSmallArea를 호출함. (아니면 무한 루프)
-			if (id === "category") {
-				setSmallArea();
+			if (hasSearchInfo) {
+				if (id === "category") {
+					setSmallArea();
+				} else if (id === "location") {
+					showAttractionsSearchedFromHome();
+				}
 			}
 		}
 
@@ -226,7 +231,7 @@
 		    	return;
 		    }
 
-		    const searchUrl = makeSearchUrl(sidoCode);
+		    const searchUrl = makeSearchUrl(1);
 		    event.preventDefault();
 
 		    fetch(searchUrl)
@@ -251,16 +256,10 @@
 		const map = new kakao.maps.Map(mapContainer, mapOption);
 		
 		// ================ Search From Home Start ================
-		let attractions = '${searchFromHome}';
-		if (attractions !== '') {
-			attractions = JSON.parse(attractions);
-			const pageNavInfo = JSON.parse('${pageNavInfo}');
-			makePageNav(pageNavInfo);
-			console.log(pageNavInfo);
-			const positions = [];
+		function showAttractionsSearchedFromHome() {
+			const attractions = JSON.parse('${searchFromHome}');
 			makeList(attractions);
-			const pageNav = document.querySelector("#page-nav");
-			pageNav.style.display = "block";
+			
 			const searchInfo = JSON.parse('${searchInfo}');
 
 			// contentType 선택
@@ -276,18 +275,29 @@
 			if (searchInfo.keyword !== null) {
 				document.querySelector("#keyword").value = searchInfo.keyword;
 			}
+			
+			const pageNav = document.querySelector("#page-nav");
+			pageNav.style.display = "block";
+
+			const pageNavInfo = JSON.parse('${pageNavInfo}');
+			makePageNav(pageNavInfo);
+			console.log(pageNavInfo);
 		}
+		
 
 		// ================ Search From Home End ================
 
-		function makeSearchUrl(sidoCode) {
+		function makeSearchUrl(pageNo) {
+			const sidoSelect = document.getElementById("category");
+			let sidoCode = sidoSelect.options[sidoSelect.selectedIndex].value;
 			let gugunCode = document.getElementById("location").value;
 		    let contentTypeId = document.getElementById("contents").value;
 		    let keyword = document.getElementById("keyword").value;
 // 		    console.log(areaCode, gugunCode, content, keyword);
 
-		    let searchUrl = "${root}/attraction?action=search&pageNo=1";
-
+		    let searchUrl = "${root}/attraction?action=search";
+			
+			searchUrl += "&pageNo=" + pageNo;
 		    searchUrl += "&sidoCode=" + sidoCode;
 		    searchUrl += "&gugunCode=" + gugunCode;
 		    searchUrl += "&contentTypeId=" + contentTypeId;
@@ -365,9 +375,6 @@
 				nextBtn.classList.add("disabled");
 			}
 
-			console.log(prevBtn);
-			console.log(nextBtn);
-
 			if (pageNavInfo.hasPrevNav) {
 				prevBtn.classList.remove("disabled");
 			}
@@ -375,7 +382,8 @@
 			if (pageNavInfo.hasNextNav) {
 				nextBtn.classList.remove("disabled");
 			}
-
+			
+			
 			for (let i=0; i<pageNavInfo.pageCount; i++) {
 				const pageList = document.createElement("li");
 				pageList.classList.add("page-item");
