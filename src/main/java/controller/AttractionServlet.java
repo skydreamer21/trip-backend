@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
 import model.AttractionDto;
+import model.AttractionSearchDto;
 import model.GugunDto;
 import model.PageNav;
 import model.SidoDto;
@@ -87,8 +88,10 @@ public class AttractionServlet extends HttpServlet {
 			List<AttractionDto> attractionDtos = attractionService.findAttractions(sidoCode, gugunCode, contentTypeId, keyword, pageNo);
 			PageNav pageNavInfo = attractionService.findPageNavInfo(
 					sidoCode, gugunCode, contentTypeId, keyword, pageNo);
+			AttractionSearchDto attractionSearchDto = new AttractionSearchDto(sidoCode, gugunCode, contentTypeId, keyword);
 			request.setAttribute("searchFromHome", gson.toJson(attractionDtos));
 			request.setAttribute("pageNavInfo", gson.toJson(pageNavInfo));
+			request.setAttribute("searchInfo", gson.toJson(attractionSearchDto));
 			RequestDispatcher rd = request.getRequestDispatcher("./attraction/attraction.jsp");
 			rd.forward(request, response);
 		}

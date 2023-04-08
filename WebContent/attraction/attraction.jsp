@@ -162,6 +162,7 @@
 		    const smallAreaOption = document.querySelector("#location");
 
 		    const sidoCode = document.querySelector("#category").value;
+			console.log("sido : " + sidoCode);
 		    let smallAreaUrl = "${root}/attraction?action=gugun&sidoCode="+sidoCode;
 		    
 		    fetch(smallAreaUrl, { method: "GET" })
@@ -170,7 +171,15 @@
 		    
 		}
 		
+		// TODO : sido와 gugun을 다 설정하려하다 보니까 기능이 복잡해짐 => 기능 분리 대상
 		function makeOption(data, id) {
+			let searchInfo = '${searchInfo}';
+			const hasSearchInfo = searchInfo !== '';
+			if (hasSearchInfo) {
+				searchInfo = JSON.parse('${searchInfo}');
+				console.log(searchInfo);
+			}
+
 // 		    console.log(data);
 		    let sel = document.getElementById(id);
 		    data.forEach((data) => {
@@ -179,8 +188,20 @@
 		        opt.setAttribute("value", data.code);
 		        opt.appendChild(document.createTextNode(data.name));
 				
+				if (hasSearchInfo) {
+					if (id === "category" && data.code === searchInfo.sidoCode) {
+						opt.selected = true;
+					} else if (id === "location" && data.code === searchInfo.gugunCode) {
+						opt.selected = true;
+					}
+				}
 		        sel.appendChild(opt);
 		    });
+
+			// sido 설정할 때만 setSmallArea를 호출함. (아니면 무한 루프)
+			if (id === "category") {
+				setSmallArea();
+			}
 		}
 
 		function removeSmallArea() {
@@ -240,6 +261,21 @@
 			makeList(attractions);
 			const pageNav = document.querySelector("#page-nav");
 			pageNav.style.display = "block";
+			const searchInfo = JSON.parse('${searchInfo}');
+
+			// contentType 선택
+			const contentTypeOptions = document.querySelectorAll("#contents option");
+			console.log(contentTypeOptions);
+			for (let contentTypeOption of contentTypeOptions) {
+				if (parseInt(contentTypeOption.value) === searchInfo.contentTypeId) {
+					contentTypeOption.selected = true;
+				}
+			}
+
+			// keyword Value
+			if (searchInfo.keyword !== null) {
+				document.querySelector("#keyword").value = searchInfo.keyword;
+			}
 		}
 
 		// ================ Search From Home End ================
