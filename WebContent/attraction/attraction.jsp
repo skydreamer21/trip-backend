@@ -345,7 +345,11 @@
 				pageList.classList.add("page-item");
 				const pageLink = document.createElement("a");
 				pageLink.classList.add("page-link");
-				pageLink.textContent = pageNavInfo.startPage + i;
+				const pageNo = pageNavInfo.startPage + i;
+				pageLink.textContent = pageNo;
+				if (pageNo === pageNavInfo.pageNo) {
+					pageList.classList.add("active");
+				}
 				pageList.appendChild(pageLink);
 				pageNav.insertBefore(pageList, nextBtn);
 			}
