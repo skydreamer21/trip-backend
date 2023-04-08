@@ -71,8 +71,7 @@ public class AttractionServlet extends HttpServlet {
 			String keyword = request.getParameter("keyword");
 			
 			List<AttractionDto> attractionDtos = attractionService.findAttractions(sidoCode, gugunCode, contentTypeId, keyword);
-			request.setAttribute("searchFromHome", attractionDtos);
-			request.setAttribute("size", attractionDtos.size());
+			request.setAttribute("searchFromHome", gson.toJson(attractionDtos));
 			RequestDispatcher rd = request.getRequestDispatcher("./attraction/attraction.jsp");
 			rd.forward(request, response);
 		}
