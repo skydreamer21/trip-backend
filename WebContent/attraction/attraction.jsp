@@ -115,7 +115,7 @@
 							<a class="page-link">Previous</a>
 						</li>
 						<!-- <li class="page-item"><a class="page-link" href="#">5</a></li> -->
-						<li class="page-item">
+						<li class="page-item disabled">
 							<a class="page-link" href="#">Next</a>
 						</li>
 					</ul>
@@ -186,7 +186,6 @@
 		function removeSmallArea() {
 		    console.log("remove");
 		    const smallAreaOptionList = document.querySelectorAll("#location option");
-		    console.log("smallAreaOptionList");
 		    for (let i = 1; i < smallAreaOptionList.length; i++) {
 		        // console.log(smallAreaOptionList[i]);
 		        smallAreaOptionList[i].remove();
@@ -222,10 +221,11 @@
 		    fetch(searchUrl)
 		        .then((response) => response.json())
 		        .then((data) => {
-					// console.log(data)
+					console.log(data.pageNavInfo)
 					makeList(data.attractions)
 					const pageNav = document.querySelector("#page-nav");
 					pageNav.style.display = "block";
+					makePageNav(data.pageNavInfo);
 				});
 		});
 
@@ -244,7 +244,8 @@
 		if (attractions !== '') {
 			attractions = JSON.parse(attractions);
 			const pageNavInfo = JSON.parse('${pageNavInfo}');
-			// console.log(pageNavInfo);
+			makePageNav(pageNavInfo);
+			console.log(pageNavInfo);
 			const positions = [];
 			makeList(attractions);
 			const pageNav = document.querySelector("#page-nav");
@@ -304,13 +305,59 @@
 		    // 첫번째 검색 정보를 이용하여 지도 중심을 이동 시킵니다
 		    map.setCenter(positions[0].latlng);
 		}
-
 		
 		function moveCenter(lat, lng) {
 		    map.setCenter(new kakao.maps.LatLng(lat, lng));
 		}
 
-		
+		function makePageNav(pageNavInfo) {
+			const pageNav = document.querySelector("ul.pagination");
+			removePageList(pageNav);
+
+			const prevBtn = pageNav.querySelector("li:first-of-type");
+			const nextBtn = pageNav.querySelector("li:last-of-type");
+
+			// prevBtn, nextBtn 초기화
+			if (prevBtn.classList.contains("disabled")) {
+				prevBtn.classList.add("disabled");
+			}
+			if (nextBtn.classList.contains("disabled")) {
+				nextBtn.classList.add("disabled");
+			}
+
+			console.log(prevBtn);
+			console.log(nextBtn);
+
+			if (pageNavInfo.hasPrevNav) {
+				prevBtn.classList.remove("disabled");
+			}
+
+			if (pageNavInfo.hasNextNav) {
+				nextBtn.classList.remove("disabled");
+			}
+
+			for (let i=0; i<pageNavInfo.pageCount; i++) {
+				const pageList = document.createElement("li");
+				pageList.classList.add("page-item");
+				const pageLink = document.createElement("a");
+				pageLink.classList.add("page-link");
+				pageLink.textContent = pageNavInfo.startPage + i;
+				pageList.appendChild(pageLink);
+				pageNav.insertBefore(pageList, nextBtn);
+			}
+		}
+
+		/**
+		* @param {Element} pageNav
+		*
+		*/
+		function removePageList(pageNav) {
+			const navList = pageNav.querySelectorAll("li");
+			for (let i=1; i<navList.length-1; i++) {
+				navList[i].remove();
+			}
+		}
+
 		</script>
 	<!--====== JAVASCRIPT IMPORT START ======-->
 </body>
