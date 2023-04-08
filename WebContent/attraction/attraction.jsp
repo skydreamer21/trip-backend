@@ -390,6 +390,20 @@
 				const pageLink = document.createElement("a");
 				pageLink.classList.add("page-link");
 				const pageNo = pageNavInfo.startPage + i;
+				pageLink.addEventListener("click", (event) => {
+					const searchUrl = makeSearchUrl(pageNo);
+					event.preventDefault();
+
+					fetch(searchUrl)
+						.then((response) => response.json())
+						.then((data) => {
+							console.log(data.pageNavInfo)
+							makeList(data.attractions)
+							const pageNav = document.querySelector("#page-nav");
+							pageNav.style.display = "block";
+							makePageNav(data.pageNavInfo);
+						});
+				})
 				pageLink.textContent = pageNo;
 				if (pageNo === pageNavInfo.pageNo) {
 					pageList.classList.add("active");
