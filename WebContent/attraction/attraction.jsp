@@ -114,14 +114,8 @@
 						<li class="page-item disabled">
 							<a class="page-link">Previous</a>
 						</li>
-						<li class="page-item"><a class="page-link" href="#">1</a></li>
-						<li class="page-item active" aria-current="page">
-							<a class="page-link" href="#">2</a>
-						</li>
-						<li class="page-item"><a class="page-link" href="#">3</a></li>
-						<li class="page-item"><a class="page-link" href="#">4</a></li>
-						<li class="page-item"><a class="page-link" href="#">5</a></li>
-						<li class="page-item">
+						<!-- <li class="page-item"><a class="page-link" href="#">5</a></li> -->
+						<li class="page-item disabled">
 							<a class="page-link" href="#">Next</a>
 						</li>
 					</ul>
@@ -152,6 +146,7 @@
 		// index page 로딩 후 전국의 시도 설정.
 		let areaUrl = "${root}/attraction?action=sido";
 		
+		// Attraction page로 넘어올 때 단 한번만 실행됨.
 		fetch(areaUrl, { method: "GET" })
 		    .then((response) => response.json())
 		    .then((data) => makeOption(data, "category"));
@@ -176,7 +171,14 @@
 		    
 		}
 		
+		// TODO : sido와 gugun을 다 설정하려하다 보니까 기능이 복잡해짐 => 기능 분리 대상
 		function makeOption(data, id) {
+			let searchInfo = '${searchInfo}';
+			const hasSearchInfo = searchInfo !== '';
+			if (hasSearchInfo) {
+				searchInfo = JSON.parse('${searchInfo}');
+			}
+
 // 		    console.log(data);
 		    let sel = document.getElementById(id);
 		    data.forEach((data) => {
@@ -185,14 +187,29 @@
 		        opt.setAttribute("value", data.code);
 		        opt.appendChild(document.createTextNode(data.name));
 				
+				if (hasSearchInfo) {
+					if (id === "category" && data.code === searchInfo.sidoCode) {
+						opt.selected = true;
+					} else if (id === "location" && data.code === searchInfo.gugunCode) {
+						opt.selected = true;
+					}
+				}
 		        sel.appendChild(opt);
 		    });
+
+			// sido 설정할 때만 setSmallArea를 호출함. (아니면 무한 루프)
+			if (hasSearchInfo) {
+				if (id === "category") {
+					setSmallArea();
+				} else if (id === "location") {
+					showAttractionsSearchedFromHome();
+				}
+			}
 		}
 
 		function removeSmallArea() {
 		    console.log("remove");
 		    const smallAreaOptionList = document.querySelectorAll("#location option");
-		    console.log("smallAreaOptionList");
 		    for (let i = 1; i < smallAreaOptionList.length; i++) {
 		        // console.log(smallAreaOptionList[i]);
 		        smallAreaOptionList[i].remove();
@@ -211,23 +228,18 @@
 		    	alert("지역을 선택해주세요!");
 		    	return;
 		    }
-		    
-		    let gugunCode = document.getElementById("location").value;
-		    let contentTypeId = document.getElementById("contents").value;
-		    let keyword = document.getElementById("keyword").value;
-// 		    console.log(areaCode, gugunCode, content, keyword);
 
-		    let searchUrl = "${root}/attraction?action=search";
-
-		    searchUrl += "&sidoCode=" + sidoCode;
-		    searchUrl += "&gugunCode=" + gugunCode;
-		    searchUrl += "&contentTypeId=" + contentTypeId;
-		    searchUrl += "&keyword=" + keyword;
+		    const searchUrl = makeSearchUrl(1);
 		    event.preventDefault();
 
 		    fetch(searchUrl)
 		        .then((response) => response.json())
-		        .then((data) => makeList(data));
+		        .then((data) => {
+					makeList(data.attractions)
+					const pageNav = document.querySelector("#page-nav");
+					pageNav.style.display = "block";
+					makePageNav(data.pageNavInfo);
+				});
 		});
 
 		// ================ Search Button End ================
@@ -241,16 +253,52 @@
 		const map = new kakao.maps.Map(mapContainer, mapOption);
 		
 		// ================ Search From Home Start ================
-
-		if (${searchFromHome} !== null) {
-			const positions = [];
-			attractions = ${searchFromHome};
+		function showAttractionsSearchedFromHome() {
+			const attractions = JSON.parse('${searchFromHome}');
 			makeList(attractions);
+			
+			const searchInfo = JSON.parse('${searchInfo}');
+
+			// contentType 선택
+			const contentTypeOptions = document.querySelectorAll("#contents option");
+			for (let contentTypeOption of contentTypeOptions) {
+				if (parseInt(contentTypeOption.value) === searchInfo.contentTypeId) {
+					contentTypeOption.selected = true;
+				}
+			}
+
+			// keyword Value
+			if (searchInfo.keyword !== null) {
+				document.querySelector("#keyword").value = searchInfo.keyword;
+			}
+			
+			const pageNav = document.querySelector("#page-nav");
+			pageNav.style.display = "block";
+
+			const pageNavInfo = JSON.parse('${pageNavInfo}');
+			makePageNav(pageNavInfo);
 		}
+		
 
 		// ================ Search From Home End ================
 
+		function makeSearchUrl(pageNo) {
+			const sidoSelect = document.getElementById("category");
+			let sidoCode = sidoSelect.options[sidoSelect.selectedIndex].value;
+			let gugunCode = document.getElementById("location").value;
+		    let contentTypeId = document.getElementById("contents").value;
+		    let keyword = document.getElementById("keyword").value;
+// 		    console.log(areaCode, gugunCode, content, keyword);
 
+		    let searchUrl = "${root}/attraction?action=search";
+			
+			searchUrl += "&pageNo=" + pageNo;
+		    searchUrl += "&sidoCode=" + sidoCode;
+		    searchUrl += "&gugunCode=" + gugunCode;
+		    searchUrl += "&contentTypeId=" + contentTypeId;
+		    searchUrl += "&keyword=" + keyword;
+			return searchUrl;
+		}
 		
 		function makeList(data) {
 // 		    console.log(data);
@@ -301,13 +349,110 @@
 		    // 첫번째 검색 정보를 이용하여 지도 중심을 이동 시킵니다
 		    map.setCenter(positions[0].latlng);
 		}
-
 		
 		function moveCenter(lat, lng) {
 		    map.setCenter(new kakao.maps.LatLng(lat, lng));
 		}
-
 		
+		function fetchSearchUrl(searchUrl) {
+			fetch(searchUrl)
+				.then((response) => response.json())
+				.then((data) => {
+					makeList(data.attractions)
+					const pageNav = document.querySelector("#page-nav");
+					pageNav.style.display = "block";
+					makePageNav(data.pageNavInfo);
+				});
+		}
+		
+		function makePageNav(pageNavInfo) {
+			const pageNav = document.querySelector("ul.pagination");
+			removePageList(pageNav);
+
+			const prevBtn = pageNav.querySelector("li:first-of-type");
+			const nextBtn = pageNav.querySelector("li:last-of-type");
+
+			// prevBtn, nextBtn 초기화
+			if (prevBtn.classList.contains("disabled")) {
+				prevBtn.classList.add("disabled");
+			}
+			if (nextBtn.classList.contains("disabled")) {
+				nextBtn.classList.add("disabled");
+			}
+
+			if (pageNavInfo.hasPrevNav) {
+				prevBtn.classList.remove("disabled");
+				
+				prevBtn.addEventListener("click", function() {
+					const searchUrl = makeSearchUrl(pageNavInfo.startPage - pageNavInfo.maxPage);
+					event.preventDefault();
+					fetchSearchUrl(searchUrl);
+					this.removeEventListener("click", arguments.callee);
+				});
+			}
+
+			if (pageNavInfo.hasNextNav) {
+				nextBtn.classList.remove("disabled");
+				nextBtn.addEventListener("click", function() {
+					console.log("next clicked!");
+					const searchUrl = makeSearchUrl(pageNavInfo.startPage + pageNavInfo.maxPage);
+					event.preventDefault();
+					fetchSearchUrl(searchUrl);
+					this.removeEventListener("click", arguments.callee);
+				});
+			}
+			
+			for (let i=0; i<pageNavInfo.pageCount; i++) {
+				const pageList = document.createElement("li");
+				pageList.classList.add("page-item");
+				const pageLink = document.createElement("a");
+				pageLink.classList.add("page-link");
+				const pageNo = pageNavInfo.startPage + i;
+				pageLink.addEventListener("click", (event) => {
+					const searchUrl = makeSearchUrl(pageNo);
+					event.preventDefault();
+
+					fetch(searchUrl)
+						.then((response) => response.json())
+						.then((data) => {
+							makeList(data.attractions)
+							const pageNav = document.querySelector("#page-nav");
+							pageNav.style.display = "block";
+							changeActivePage(pageNo);
+						});
+				})
+				pageLink.textContent = pageNo;
+				if (pageNo === pageNavInfo.pageNo) {
+					pageList.classList.add("active");
+				}
+				pageList.appendChild(pageLink);
+				pageNav.insertBefore(pageList, nextBtn);
+			}
+		}
+
+		function changeActivePage(pageNo) {
+			const pages = document.querySelectorAll("ul.pagination li");
+			for (let i=1; i<pages.length-1; i++) {
+				if (pages[i].classList.contains("active")) {
+					pages[i].classList.remove("active");
+				}
+				if (parseInt(pages[i].textContent) === pageNo) {
+					pages[i].classList.add("active");
+				}
+			}
+		}
+
+		/**
+		* @param {Element} pageNav
+		*
+		*/
+		function removePageList(pageNav) {
+			const navList = pageNav.querySelectorAll("li");
+			for (let i=1; i<navList.length-1; i++) {
+				navList[i].remove();
+			}
+		}
+
 		</script>
 	<!--====== JAVASCRIPT IMPORT START ======-->
 </body>

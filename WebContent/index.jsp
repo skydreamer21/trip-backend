@@ -19,7 +19,7 @@
 </head>
 <body>
 	<%@ include file="/common/nav.jsp" %>
-	
+
 	<!-- Masthead-->
 	<header class="masthead">
 		<div class="container position-relative">
@@ -170,7 +170,7 @@
 		    let keyword = document.getElementById("keyword").value;
 	//		    console.log(areaCode, gugunCode, content, keyword);
 	
-		    let searchUrl = "${root}/attraction?action=searchInHome";
+		    let searchUrl = "${root}/attraction?action=searchInHome&pageNo=1";
 	
 		    searchUrl += "&sidoCode=" + sidoCode;
 		    searchUrl += "&gugunCode=" + gugunCode;

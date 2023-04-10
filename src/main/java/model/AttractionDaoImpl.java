@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import service.constant.AttractionListConstant;
 import util.DBUtil;
 
 public class AttractionDaoImpl implements iAtrractionDao {
@@ -17,7 +18,8 @@ public class AttractionDaoImpl implements iAtrractionDao {
 	}
 
 	@Override
-	public List<AttractionDto> selectAttractions(int sidoCode, int gugunCode, int contentTypeId, String keyword) {
+	public List<AttractionDto> selectAttractions(int sidoCode, int gugunCode, int contentTypeId, String keyword, 
+			int offset, int itemCount) {
 		List<AttractionDto> attractionDtos = new ArrayList<>();
 		StringBuilder sql = new StringBuilder();
 		sql.append(" select content_id, content_type_id, title, addr1, tel, first_image, ")
@@ -32,6 +34,7 @@ public class AttractionDaoImpl implements iAtrractionDao {
 		if(!keyword.trim().equals("")) {
 			sql.append( " and title like ? ");
 		}
+		sql.append("limit ?, ?");
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -50,6 +53,8 @@ public class AttractionDaoImpl implements iAtrractionDao {
 			if(!keyword.trim().equals("")) {
 				psmt.setString(i++, "%" + keyword + "%");
 			}
+			psmt.setInt(i++, offset);
+			psmt.setInt(i++, itemCount);
 			
 			rs = psmt.executeQuery();
 			while (rs.next()) {
@@ -73,5 +78,62 @@ public class AttractionDaoImpl implements iAtrractionDao {
 		}
 		return attractionDtos;
 	}
+
+	@Override
+	public int selectCountByPageNo(int sidoCode, int gugunCode, int contentTypeId, String keyword, int offset,
+			int maxCount) {
+		int itemCount = 0;
+		StringBuilder sql = new StringBuilder();
+		sql.append(" select count(*) from ")
+			.append(" (select * from attraction_info ")
+			.append(" where sido_code=? ");
+		if(gugunCode != 0) {
+			sql.append(" and gugun_code=? ");
+		}
+		if(contentTypeId != 0) {
+			sql.append(" and content_type_id=? ");
+		}
+		if(!keyword.trim().equals("")) {
+			sql.append( " and title like ? ");
+		}
+		sql.append("limit ?, ?")
+			.append(") t");
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+			conn = dbUtil.getConnection();
+			psmt = conn.prepareStatement(sql.toString());
+			int i = 1;
+			psmt.setInt(i++, sidoCode);
+			if(gugunCode != 0) {
+				psmt.setInt(i++, gugunCode);
+			}
+			if(contentTypeId != 0) {
+				psmt.setInt(i++, contentTypeId);
+			}
+			if(!keyword.trim().equals("")) {
+				psmt.setString(i++, "%" + keyword + "%");
+			}
+			psmt.setInt(i++, offset);
+			psmt.setInt(i++, maxCount);
+			
+			rs = psmt.executeQuery();
+			
+			while (rs.next()) {
+				itemCount = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			System.out.println("[ERROR] attraction exception : " + e);
+		} finally {
+			dbUtil.close(rs, psmt, conn);
+		}
+		return itemCount;
+	}
+
+	
+	
+	
 
 }
